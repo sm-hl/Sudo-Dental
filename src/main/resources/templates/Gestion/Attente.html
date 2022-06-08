@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liste d'attente</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<div class="wrapper">
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Liste d'attente</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Liste d'attente</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lt"> + ajouter un attentiste  </button>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Cin</th>
+                    <th>Telephone</th>
+                    <th>Heure Arrivee</th>
+                    <th>statut</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="slatt : ${salleAttentes}">
+                    <td th:text="${slatt.patient.Prenom}"></td>
+                    <td th:text="${slatt.patient.Nom}"></td >
+                    <td th:text="${slatt.patient.Cin}"></td>
+                    <td th:text="${slatt.patient.TeleM1}"></td>
+                    <td th:text="${slatt.dateArrive.HeureArive}"></td>
+                    <td th:text="${slatt.status}"></td>
+                    <td>
+                      <div class="btn-group btn-group-sm">
+                        <a th:href="${'/deleteAtt/'+slatt.id}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Cin</th>
+                    <th>Telephone</th>
+                    <th>Heure Arrivee</th>
+                    <th>statut</th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+       <!-- /.modal -->
+
+      <div class="modal fade" id="modal-lt">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form th:method="post" th:object="${salleAttobject}" th:action="@{/addAtt}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter un attentiste </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               
+              <div class="form-group">
+                
+                <label>Patient</label>
+                <select class="form-control select2" th:field="*{patient.id}">
+                  <option  th:disabled th:selected th:value > -- select an patient -- </option>
+                  <option th:each="patient : ${patients}" th:text="${patient.Nom+' '+patient.Prenom}" th:value="${patient.id}"></option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="inputProjectLeader">Heure d'arrivee</label>
+                <input type="time" id="inputProjectLeader" class="form-control" th:field="*{dateArrive.HeureArive}">
+              </div>
+              
+              <div class="form-group">
+                <label for="inputProjectLeader">Status</label>
+                <select class="form-control" th:field="*{status}">
+                  <option th:value="normal">normal</option>
+                  <option th:value="Grave">Grave</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<!-- ./wrapper -->
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion Depenses</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<div class="wrapper">
+
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Gestion des Depenses</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">liste des Depenses</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-la"> + ajouter Article</button>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Numero Dépense</th>
+                    <th>Date d'article</th>
+                    <th>Nom Article</th>
+                    <th>etat d'Article</th>
+                    <th>Montant</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="depense : ${depenses}">
+                    <td th:text="${depense.id}"></td>
+                    <td th:text="${depense.date}"></td>
+                    <td th:text="${depense.nom}"></td>
+                    <th:block th:switch="${depense.etat}">
+                      <td th:case="false">
+                        <span class="badge badge-warning">non regle</span>
+                      </td>
+                      <td th:case="*" >
+                        <span class="badge badge-success">regle</span>
+                      </td>
+                    </th:block>
+                    <td th:text="${depense.montant}"></td>
+                    <td> 
+                      <div class="btn-group btn-group-sm">
+                        <a href="#" class="btn btn-info"><i class="fas fa-sign-in-alt"></i></a>
+                        <a th:href="@{'/deleteDepense/'+${depense.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tfoot>
+                  <tr>
+                    <th>Numero Dépense</th>
+                    <th>Date d'article</th>
+                    <th>Nom Article</th>
+                    <th>etat d'Article</th>
+                    <th>Montant</th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+       <!-- /.modal -->
+
+      <div class="modal fade" id="modal-la">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form th:method="post" th:object="${depenseObject}" th:action="@{/addDepense}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter Article</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label >Date d'article</label>
+                <div class="input-group date" id="date4" data-target-input="nearest">
+                  <input type="text" class="form-control datetimepicker-input" data-target="#date4" th:field="*{date}">
+                  <div class="input-group-append" data-target="#date4" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+                 <div class="form-group">
+                <label for="inputNameArticle">Nom Article</label>
+                <input type="text" id="inputNameArticle" class="form-control" th:field="*{nom}">
+              </div>
+              <div class="form-group">
+                <label for="inputMontant">Montant</label>
+                <input type="number" id="inputMontant" class="form-control" th:field="*{montant}">
+              </div>
+
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<!-- ./wrapper -->
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<script>
+  //Date picker
+  $('#date4').datetimepicker({
+    format: 'MM/DD/YYYY'
+  });
+</script>
+</body>
+</html>

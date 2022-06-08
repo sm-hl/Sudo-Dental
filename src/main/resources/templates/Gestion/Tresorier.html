@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion Depenses</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<div class="wrapper">
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Trésorerie</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">liste des Réglement et Dépenses</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+          <!-- start search -->
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="form-group">
+                        <div class="input-group input-group-lg">
+                        <div class="form-group">
+                          <label style="font-size: large; padding: 10px;">De :</label>
+                          <div class="input-group date" id="date2" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#date2" placeholder="MM/DD/YYY" id="dateD" >
+                            <div class="input-group-append" data-target="#date2" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                          <label style="font-size: large; padding: 10px;">a :</label>
+                          <div class="input-group date" id="date3" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#date3" placeholder="MM/DD/YYY" id="dateF" >
+                            <div class="input-group-append" data-target="#date3" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                          <div class="input-append">
+                              <button type="button" style="height: 60%;  margin-left: 10px;" class="btn btn-lg btn-default" onclick="personaliser()">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <!-- end search -->
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <h1>Réglements</h1>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Numero Réglement</th>
+                    <th>Date Réglement</th>
+                    <th>Montant</th>
+                  </tr>
+                  </thead>
+                  <tbody id="tbody2">
+                  </tbody>
+                  <!-- <tfoot>
+                  <tr>
+                    <th>Numero Article</th>
+                    <th>Nom Article</th>
+                    <th>etat d'Article</th>
+                    <th>Montant</th>
+                    <th></th>
+                  </tr>
+                  </tfoot> -->
+                </table>
+                <!-- start  total -->
+                <div class="card-body">
+                  <div class="row  float-right">
+                    <label for="totalRegl" style="width:50%;" class="col-form-label">Total Réglements :</label>
+                    <div style="width:50%;">
+                      <input type="text" id="totalRegl" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- end  total -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- second card of Depense -->
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <h1>Dépenses</h1>
+                   <!-- <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-la"> + ajouter Article</button> -->
+                <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Numero Dépense</th>
+                    <th>Date d'article</th>
+                    <th>Nom Article</th>
+                    <th>Montant</th>
+                  </tr>
+                  </thead>
+                  <tbody id="tbody1">
+                  </tbody>
+                  <!-- <tfoot>
+                  <tr>
+                    <th>Numero Article</th>
+                    <th>Nom Article</th>
+                    <th>etat d'Article</th>
+                    <th>Montant</th>
+                    <th></th>
+                  </tr>
+                  </tfoot> -->
+                </table>
+                <!-- start  total -->
+                <div class="card-body">
+                  <div class="row  float-right">
+                    <label for="totalRegl" style="width:50%;" class="col-form-label">Total Dépences :</label>
+                    <div style="width:50%;">
+                      <input type="text" name="totalRegl" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- end  total -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- ./second card of Depense -->
+            <!-- start  total -->
+            <div class="card-body">
+              <div class="row  float-right">
+                <label for="totalRegl" style="width:50%;" class="col-form-label">Valeur Ajoutée de Cabinet :</label>
+                <div style="width:50%;">
+                  <input type="text" name="totalRegl" class="form-control">
+                </div>
+              </div>
+            </div>
+            <!-- end  total -->
+          </div>
+          <!-- /.col -->
+        </section>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+       <!-- /.modal -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<!-- ./wrapper -->
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<th:block th:replace="~{scripts/tresor :: calcul}"></th:block>
+
+  <script>
+  //Date picker
+  $('#date2').datetimepicker({
+    format: 'MM/DD/YYYY'
+  });
+  $('#date3').datetimepicker({
+    format: 'MM/DD/YYYY'
+  });
+  </script>
+</body>
+</html>

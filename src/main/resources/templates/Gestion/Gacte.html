@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<div class="wrapper">
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Gestion des Actes</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">liste des Actes</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-la"> + ajouter Acte</button>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Numero Actes</th>
+                    <th>Nom Actes</th>
+                    <th>Nbr de seances</th>
+                    <th>Nbr d'heures</th>
+                    <th>Montant</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="acte : ${actes}">
+                    <td th:text="${acte.id}"></td>
+                    <td th:text="${acte.NomA}"></td>
+                    <td th:text="${acte.NbrSce}"></td>
+                    <td th:text="${acte.NbrHPerSce}"></td>
+                    <td th:text="${acte.Montant}"></td>
+                    <td> 
+                      <div class="btn-group btn-group-sm">
+                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                        <a th:href="${'/deleteActe/'+acte.id}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Numero Actes</th>
+                    <th>Nom Actes</th>
+                    <th>Nbr de seances</th>
+                    <th>Nbr d'heures</th>
+                    <th>Montant</th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+       <!-- /.modal -->
+
+      <div class="modal fade" id="modal-la">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form th:method="post" th:object="${acteobject}" th:action="@{/addActe}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter Acte</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                 <div class="form-group">
+                <label for="inputNameA">Nom Actes</label>
+                <input type="text" id="inputNameA" class="form-control" th:field="*{NomA}">
+              </div>
+              <div class="form-group">
+                <label for="inputNbrS">Nbr de seances</label>
+                <input type="number" id="inputNbrS" class="form-control" th:field="*{NbrSce}">
+              </div>
+              <div class="form-group">
+                <label for="inputNbrH">Nbr d'heures</label>
+                <input type="number" id="inputNbrH" class="form-control" th:field="*{NbrHPerSce}">
+              </div>
+              <div class="form-group">
+                <label for="inputMontant">Montant</label>
+                <input type="number" id="inputMontant" class="form-control" th:field="*{Montant}">
+              </div>
+
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+  </footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<!-- ./wrapper -->
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+</body>
+</html>

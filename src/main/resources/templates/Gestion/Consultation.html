@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org "  xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=9">
+  <title>Consultation</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<div class="wrapper">
+
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">fiche Consultation</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Fiche Consultation</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+         
+         <div class="col-12 col-sm-15">
+            <div class="card card-primary card-outline card-outline-tabs">
+              <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">les Seances</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false">les Ordonances</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-settings-tab" data-toggle="pill" href="#custom-tabs-four-settings" role="tab" aria-controls="custom-tabs-four-settings" aria-selected="false">les Certificats</a>
+                  </li>
+                   <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-image-tab" data-toggle="pill" href="#custom-tabs-four-image" role="tab" aria-controls="custom-tabs-four-image" aria-selected="false">les image buccales</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-four-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                    
+                 <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-ls"> + ajouter Seance</button>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Seance</th>
+                    <th>Montant</th>
+                    <th>Etat</th>
+                    <th>Date payment</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="seance : ${consultation.seanceList}">
+                    <td th:text="${seance.DateSc}"></td>
+                    <td th:text="${seance.Description}"></td>
+                    <td th:text="${seance.MontantSc}"></td>
+                      <th:block th:switch="${seance.reglement.DatePayment}">
+                          <td th:case="null">
+                              <span class="badge badge-warning">non regle</span>
+                          </td>
+                          <td th:case="*" >
+                              <span class="badge badge-success">regle</span>
+                          </td>
+                      </th:block>
+                      <td th:text="${seance.reglement.DatePayment ?:'-'}"></td>
+                    <td >
+                      <div class="btn-group btn-group-sm" th:switch="${seance.reglement.DatePayment}">
+                        <a href="#" class="btn btn-info"><i class="fas fa-pen-square"></i></a>
+                        <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/deleteseance/'+${seance.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                          <a th:case="null" th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/validerReglement/'+${seance.id}}" class="btn btn-success"><i class="fas fa-sign-in-alt"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                  <th>Date</th>
+                    <th>Seance</th>
+                    <th>Montant</th>
+                    <th>Etat</th>
+                    <th>Date payment</th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+                  </div>
+
+   <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+              
+                     
+
+                 <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                  
+                  <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lo"> + ajouter Ordonance</button>
+
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                      <th></th>
+                    <th>Numero D'ordonance</th>
+                    <th>Date</th>
+                    <th>Medicament</th>
+                    <th>Dosage</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <th:block th:each="ordonance : ${consultation.ordonanceList}" >
+                      <tr th:each="decrire,status : ${ordonance.decrireList}" >
+                 <th:block th:if="${status.index eq 0}">
+                      <td th:rowspan="${ordonance.nbrMedicament}" style="vertical-align : middle;text-align:center;">
+                          <div class="btn-group btn-group-sm">
+                              <a href="#" class="btn btn-info"><i class="fas fa-pen"></i></a>
+                              <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                              <a href="#" class="btn btn-warning"><i class="fas fa-print"></i></a>
+                          </div>
+                      </td>
+                    <td th:rowspan="${ordonance.nbrMedicament}" th:text="${ordonance.id}" style="vertical-align : middle;text-align:center;"></td>
+                    <td th:rowspan="${ordonance.nbrMedicament}" th:text="${ordonance.DateO}" style="vertical-align : middle;text-align:center;"></td>
+                 </th:block>
+                       <td th:text="${decrire.medicament.NomM}"></td>
+                       <td th:text="${decrire.Dosage}"></td>
+                  </tr>
+                  </th:block>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                      <th></th>
+                    <th>Numero D'ordonance</th>
+                    <th>Date</th>
+                    <th>Medicament</th>
+                    <th>Dosage</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+
+                  </div>
+
+                  <div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
+          <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                  
+        <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Certificat</button>
+
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Numero Certificat</th>
+                    <th>Date Certificat</th>
+                    <th>nbr jour</th>
+                      <th>Debut de Certificat </th>
+                      <th>fin de Certificat </th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="certificat : ${consultation.certificatSet}">
+                      <td th:text="${certificat.id}"></td>
+                      <td th:text="${certificat.DateCer}"></td>
+                      <td th:text="${certificat.Nbrjour}"></td>
+                      <td th:text="${certificat.DebutCer}"></td>
+                      <td th:text="${certificat.finCer}"></td>
+                      <td>
+                          <div class="btn-group btn-group-sm">
+                              <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/deletecertificat/'+${certificat.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                              <a href="#" class="btn btn-warning"><i class="fas fa-print"></i></a>
+                          </div>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+               <th>Numero Certificat</th>
+                    <th>Date Certificat</th>
+                    <th>nbr jour</th>
+                      <th>Debut de Certificat </th>
+                      <th>fin de Certificat </th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+                  </div>
+
+     <div class="tab-pane fade" id="custom-tabs-four-image" role="tabpanel" aria-labelledby="custom-tabs-four-image-tab">
+
+                 <div class="row">
+            <div class="row" id="gallery">
+            </div>
+
+            <div class="col-md-12">
+              <div class="card-body">
+                <div id="actions" class="row">
+                  <div class="col-lg-6">
+                    <div class="btn-group w-100"> <span class="btn btn-success col fileinput-button">
+                        <i class="fas fa-plus"></i>
+                        <span>Add files</span> </span>
+                      <button type="submit" class="btn btn-primary col start"> <i class="fas fa-upload"></i> <span>Start upload</span> </button>
+                      <button type="reset" class="btn btn-warning col cancel"> <i class="fas fa-times-circle"></i> <span>Cancel upload</span> </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 d-flex align-items-center">
+                    <div class="fileupload-process w-100">
+                      <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="table table-striped files" id="previews">
+                  <div id="template" class="row mt-2">
+                    <div class="col-auto"> <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span> </div>
+                    <div class="col d-flex align-items-center">
+                      <p class="mb-0"> <span class="lead" data-dz-name></span> (<span data-dz-size></span>) </p> <strong class="error text-danger" data-dz-errormessage></strong> </div>
+                    <div class="col-4 d-flex align-items-center">
+                      <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                      </div>
+                    </div>
+                    <div class="col-auto d-flex align-items-center">
+                      <div class="btn-group">
+                        <button class="btn btn-primary start"> <i class="fas fa-upload"></i> <span>Start</span> </button>
+                        <button data-dz-remove class="btn btn-warning cancel"> <i class="fas fa-times-circle"></i> <span>Cancel</span> </button>
+                        <button data-dz-remove class="btn btn-danger delete"> <i class="fas fa-trash"></i> <span>Delete</span> </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+          </div>
+        </div> 
+
+
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+         
+
+
+
+
+
+        </div>
+        <!-- /.row -->
+      </div><!--/. container-fluid -->
+      </div>
+    </section>
+    <!-- /.content -->
+
+
+
+
+
+<!--modal-->
+      <div class="modal fade" id="modal-ls">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <form th:action="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/addseance'}" th:object="${seanceobject}" th:method="post">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter Seance</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="inputDate">Date de Sceance</label>
+             <div class="input-group date" id="date8" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date8" th:field="*{DateSc}">
+                        <div class="input-group-append" data-target="#date8" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputProjectLeader">Traitement</label>
+                <input type="text" id="inputProjectLeader" class="form-control" th:field="*{Description}">
+              </div>
+
+              <div class="form-group">
+                <label for="inputProjectLeader">Montant</label>
+                <input type="text" id="inputProjectLeader" class="form-control" th:field="*{MontantSc}">
+              </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+<!--modal-->
+      <div class="modal fade" id="modal-lc">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <form th:method="post" th:action="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/addcertificat'}" th:object="${certificatobject}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter Certificat</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="inputDate">Date</label>
+             <div class="input-group date" id="date9" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date9" th:field="*{DateCer}" >
+                        <div class="input-group-append" data-target="#date9" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="inputDate">Date debut traitement</label>
+             <div class="input-group date" id="date10" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date10" th:field="*{DebutCer}" >
+                        <div class="input-group-append" data-target="#date10" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputDate">Date fin traitement</label>
+             <div class="input-group date" id="date11" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date11" th:field="*{finCer}" >
+                        <div class="input-group-append" data-target="#date11" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+
+               <div class="form-group">
+                <label for="inputEstimatedBudget">nbr jour</label>
+                <input type="number" id="inputEstimatedBudget" class="form-control" value="0" step="1" th:field="*{Nbrjour}">
+              </div>
+
+
+              <div class="form-group">
+                <label for="inputProjectLeader">Traitement</label>
+                <input type="text" id="inputProjectLeader" class="form-control" th:field="*{Traitement}">
+              </div>
+               
+              
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+              </form> </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+<!--modal-->
+      <div class="modal fade" id="modal-lo">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <form th:method="post" th:action="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/addordonance'}" th:object="${ordonanceDTO}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter Ordonance</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div  class="modal-body">
+                    <div id="div_parent">
+                            <div id="first_child" class="form-group">
+                              <label for="inputDate">Date</label>
+                              <div class="input-group date" id="date12" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#date12" th:field="*{ordonance.DateO}" >
+                                <div class="input-group-append" data-target="#date12" data-toggle="datetimepicker">
+                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="second_child" class="row">
+                              <div class="form-group mr-3">
+                                          <label>Medicament</label>
+                                          <select class="form-control select2" th:field="*{medicamentDTOList[0].medicamentId}">
+                                            <option th:each="medicament : ${medicaments}" th:value="${medicament.id}" th:text="${medicament.Type+'  '+medicament.NomM}"></option>
+                                          </select>
+                              </div>
+                              <div class="form-group">
+                                  <label for="inputProjectLeader">Dosage</label>
+                                  <input type="text" id="inputProjectLeader" class="form-control" th:field="*{medicamentDTOList[0].dosage}">
+                              </div>
+                            </div>
+
+                    </div>
+                              <button onclick="create_div()" type="button" class="btn btn-primary">Ajouter</button>
+               </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+    <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<th:block th:replace="~{scripts/images :: sendImages}"></th:block>
+<th:block th:replace="~{scripts/images :: getImages}"></th:block>
+<script>
+    $('#date8').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#date9').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#date10').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#date11').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#date12').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+</script>
+</body>
+</html>

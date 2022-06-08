@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org "  xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<div class="wrapper">
+
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Fiche patient</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Fiche patient</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+         
+         <div class="col-12 col-sm-15">
+            <div class="card card-primary card-outline card-outline-tabs">
+              <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">Dossier Medicale</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false">Shema Dentaire</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false">Consultation</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-four-settings-tab" data-toggle="pill" href="#custom-tabs-four-settings" role="tab" aria-controls="custom-tabs-four-settings" aria-selected="false">Rendez vous</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-four-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                      <form method="post" th:action="@{'/Patient/'+${patient.id}+'/EditDM'}" th:object="${patient}">
+     <div class="row mb-3">
+        <div class="col-12">
+          <input type="submit" value="Enregistrer" class="btn btn-success float-right">
+        </div>
+      </div>
+
+       <div class="row">
+         <div class="col-md-4">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">info patient</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="form-group">
+                    <label for="inputName">Code</label>
+                    <input type="text"  class="form-control" th:value="${patient.id}" th:field="*{id}" readonly>
+                </div>
+              <div class="form-group">
+                <label for="inputName">Nom</label>
+                <input type="text"  class="form-control" th:value="${patient.Nom}" th:field="*{Nom}">
+              </div>
+              <div class="form-group">
+                <label for="inputDescription">prenom</label>
+                <input type="text"  class="form-control" th:value="${patient.Prenom}" th:field="*{Prenom}">
+              </div>
+              <div class="form-group">
+                <label for="inputDate">Date naissance</label>
+             <div class="input-group date" id="date7" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date7" th:value="${patient.DateNaiss}" th:field="*{DateNaiss}">
+                        <div class="input-group-append" data-target="#date7" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+                <div class="form-group">
+                    <label for="inputCin">Cin</label>
+                    <input type="text"  class="form-control" th:field="*{Cin}" th:value="${patient.Cin}">
+                </div>
+              <div class="form-group">
+                <label for="inputClientCompany">sexe</label>
+         <select class="form-control"th:field="*{Sex}">
+             <option th:selected="${patient.Sex eq 'Male'}"  th:value="${'Male'}">Male</option>
+             <option th:selected="${patient.Sex eq 'Female'}"th:value="${'Female'}">Female</option>
+         </select>
+              </div>
+              <div class="form-group">
+                <label for="inputProjectLeader">Profession</label>
+                <input type="text"  class="form-control" th:field="*{Profession}" th:value="${patient.Profession}">
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-4">
+          <div class="card card-warning">
+            <div class="card-header">
+              <h3 class="card-title">Cordonne patient</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body" style="display: block;">
+              <div class="form-group">
+                <label for="inputEmail">Email</label>
+               <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  </div>
+                  <input type="email" class="form-control" placeholder="Email" th:field="*{Email}" th:value="${patient.Email}" >
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputTeleFix">Tele fix</label>
+               <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
+                    <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="text" th:field="*{TeleF}" th:value="${patient.TeleF}">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="inputMobile1">mobile 1</label>
+               <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
+                    <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="text" th:field="*{TeleM1}" th:value="${patient.TeleM1}">
+                  </div>
+              </div>
+                 <div class="form-group">
+                <label for="inputMobile2">mobile 2</label>
+              <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    </div>
+                    <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" inputmode="text" th:field="*{TeleM2}" th:value="${patient.TeleM2}">
+                  </div>
+              </div>
+                 <div class="form-group">
+                <label for="inputAdresse">Adresse</label>
+               <textarea class="form-control" rows="3" placeholder="Enter ..." th:field="*{Adresse}" th:text="${Adresse}" ></textarea>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+
+
+         <div class="col-md-4">
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">info medicale</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body" style="display: block;">
+              <div class="form-group">
+                <label for="inputPoid">Poid</label>
+                  <input type="number" id="inputPoid" class="form-control" th:field="*{dossierMedicale.Poid}" th:value="${patient.dossierMedicale.Poid}" >
+              </div>
+              <div class="form-group">
+                <label for="inputTemerature">Temperature</label>
+                <input type="number" id="inputTemerature" class="form-control" th:field="*{dossierMedicale.Temperature}" th:value="${patient.dossierMedicale.Temperature}" >
+              </div>
+              <div class="form-group">
+                <label for="inputAllergie">Allergie</label>
+                 <textarea class="form-control" rows="3" placeholder="Enter ..." th:field="*{dossierMedicale.Allergie}" th:text="${patient.dossierMedicale.Allergie}" ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="inputObservation">Observation</label>
+               <textarea class="form-control" rows="3" placeholder="Enter ..." th:field="*{dossierMedicale.Observation}" th:text="${patient.dossierMedicale.Observation}" ></textarea>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+                    </div>
+                      </form>
+                  </div  >
+                  <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+                     <div style="display: flex; justify-content: space-around;">
+                      <img  th:src="@{/dist/img/adulte.jpg}" alt="shema dentaire adulte" usemap="#adulte" style="height: 496px; width: 300px;"/>
+                       <map name="adulte">
+                         <area id="18" shape="" coords="8,211,59,234"   href="#modal-Dent"    data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="17" shape="" coords="8,178,59,198"   href="#modal-Dent"    data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="16" shape="" coords="15,136,65,163"  href="#modal-Dent"    data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="15" shape="" coords="26,108,70,126"  href="#modal-Dent"    data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="14" shape="" coords="43,80,79,101"   href="#modal-Dent"    data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+   
+                         <area id="13" shape="" coords="57,47,70,57"      href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="12" shape="" coords="90,33,104,41"     href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="11" shape="" coords="122,15,132,24"    href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="21" shape="" coords="161,17,175,26"    href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="22" shape="" coords="190,29,206,39"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="23" shape="" coords="224,49,238,57"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="24" shape="" coords="240,79,255,88"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="25" shape="" coords="255,109,270,120"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="26" shape="" coords="270,139,283,149"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="27" shape="" coords="276,182,289,191"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="28" shape="" coords="273,219,288,227"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="38" shape="" coords="272,282,286,293"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="37" shape="" coords="270,323,288,331"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="36" shape="" coords="262,366,279,374"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="35" shape="" coords="245,398,262,409"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="34" shape="" coords="230,424,245,432"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="33" shape="" coords="212,452,230,461"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="32" shape="" coords="188,469,204,478"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="31" shape="" coords="157,477,170,488"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="41" shape="" coords="123,479,137,487"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="42" shape="" coords="88,467,104,478"   href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="43" shape="" coords="64,451,77,461"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="44" shape="" coords="46,424,61,432"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="45" shape="" coords="32,396,47,406"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="46" shape="" coords="13,364,30,375"    href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="47" shape="" coords="9,321,23,333"     href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                         <area id="48" shape="" coords="4,282,20,293"     href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Adulte')">
+                       </map>
+                       <!-- enfant -->
+                       <img th:src="@{/dist/img/enfant.jpg}" alt="shema dentaire adulte" usemap="#enfant" style="height: 496px; width: 200px;"/>
+                       <map name="enfant">
+                         <area id="55" shape="" coords="9,205,54,220"  href="#modal-Dent"    data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="54" shape="" coords="23,177,63,194"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="53" shape="" coords="36,152,67,173"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="52" shape="" coords="59,134,80,157"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="51" shape="" coords="84,127,100,149"  href="#modal-Dent"  data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="61" shape="" coords="108,124,120,152"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="62" shape="" coords="122,131,147,157"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="63" shape="" coords="131,152,169,172"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="64" shape="" coords="144,180,183,195"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="65" shape="" coords="146,204,196,223"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="85" shape="" coords="11,286,53,302"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+   
+                         <area id="84" shape="" coords="23,323,40,333"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="83" shape="" coords="38,342,54,352"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="82" shape="" coords="59,356,74,367"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="81" shape="" coords="81,367,96,376"  href="#modal-Dent"   data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="71" shape="" coords="111,367,123,376"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="72" shape="" coords="132,356,148,365"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="73" shape="" coords="151,343,167,353"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="74" shape="" coords="167,324,180,332"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                         <area id="75" shape="" coords="177,295,195,303"  href="#modal-Dent" data-toggle="modal" alt="" onclick="show_id(this.id,'Enfant')">
+                       </map>
+                     </div>
+                  </div>
+
+
+                    <!--modal-->
+                    <div class="modal fade" id="modal-Dent">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <form th:method="post" th:action="@{'/Patient/'+${patient.id}+'/validerSD'}" th:object="${dentobject}">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Information de Dent</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <center><label for="inputClientCompany">GENRE : </label>
+                                            <input name="Genre" type="text"  id="Genre" th:field="*{Genre}" readonly/>
+                                           </center>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputid">Numero de Dent</label>
+                                        <input type="number" id="inputid" class="form-control" value="0" step="1" readonly th:field="*{NumD}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inputEstimatedBudget" >Etat de Dent</label>
+                                        <input type="text" id="inputEstimatedBudget" class="form-control" th:field="*{EtatD}" >
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label>Acte sur le Dent</label>
+                                        <select class="form-control select2" th:field="*{ActeD}">
+                                            <option  th:disabled th:selected th:value > -- select an acte -- </option>
+                                                <option th:each="acte : ${actes}" th:text="${acte.NomA}" th:value="${acte.NomA}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputAdresse">description</label>
+                                        <textarea class="form-control" rows="3" placeholder="Enter ..." th:field="*{Description}"  ></textarea>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary">Modifier</button>
+                                </div>
+                                </form>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+
+
+
+                  
+   <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+              
+      <section class="content">
+
+
+  <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Consultation</button>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>nbr Seance</th>
+                    <th>Acte</th>
+                    <th>Montant total</th>
+                   <th>Etat Reglement</th>
+                    <th>montant paye</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  <tr th:each="consultation: ${patient.consultationSet}">
+                      <td th:text="${consultation.DateC}"></td>
+                      <td th:text="${consultation.NbrSeance}"></td>
+                      <td th:text="${consultation.acte.NomA}"></td>
+                      <td th:text="${consultation.Montant}"></td>
+                      <th:block th:switch="${consultation.EtatReglement}">
+                          <td th:case="true">
+                              <span class="badge badge-info">Regle</span>
+                          </td>
+                          <td th:case="*" >
+                              <span class="badge badge-warning">non Regle</span>
+                          </td>
+                      </th:block>
+                      <td th:text="${consultation.MontantPaye}"></td>
+                      <td>
+                          <div class="btn-group btn-group-sm">
+                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                              <a th:href="@{'/Patient/'+${patient.id}+'/deleteConsultation/'+${consultation.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                          </div>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                  <th>Date</th>
+                    <th>nbr Seance</th>
+                    <th>Acte</th>
+                    <th>Montant total</th>
+                   <th>Etat Reglement</th>
+                    <th>montant paye</th>
+                    <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+      </section>
+                  </div>
+
+                  <div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
+            <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lr"> + ajouter Rendez-vous</button>
+            <div class="row">  
+           <div class="col-12">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Heure Debut</th>
+                    <th>Heure Fin</th>
+                      <th>Traitement</th>
+                    <th>Etat</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="rdv : ${patient.rdvSet}">
+                      <td th:text="${rdv.DateRdv}"></td>
+                      <td th:text="${rdv.HeureRdv}"></td>
+                      <td th:text="${rdv.HeureFin}"></td>
+                      <td th:text="${rdv.Traitement}"></td>
+                      <th:block th:switch="${rdv.Etat}">
+                      <td th:case="true">
+                          <span class="badge badge-info">valide</span>
+                      </td>
+                          <td th:case="*" >
+                              <span class="badge badge-warning">non valide</span>
+                          </td>
+                      </th:block>
+                      <td>
+                          <div class="btn-group btn-group-sm">
+                              <a th:href="@{'/Patient/'+${patient.id}+'/deleteRdv/'+${rdv.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                          </div>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                      <th>Date</th>
+                      <th>Heure Debut</th>
+                      <th>Heure Fin</th>
+                      <th>Traitement</th>
+                      <th>Etat</th>
+                      <th></th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+
+
+
+
+
+
+        </div>
+        <!-- /.row -->
+      </div>
+    <!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+
+
+<!--modal-->
+      <div class="modal fade" id="modal-lr">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <form th:method="post" th:action="@{'/Patient/'+${patient.id}+'/addRdv'}" th:object="${rdvObject}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter RDV</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="inputDate">Date de Rdv</label>
+             <div class="input-group date" id="date6" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date6" th:field="*{DateRdv}">
+                        <div class="input-group-append" data-target="#date6" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+
+    <div class="form-group">
+                <label for="inputDate">Heure debut</label>
+             <div class="input-group date" id="time1" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#time1" th:field="*{HeureRdv}">
+                        <div class="input-group-append" data-target="#time1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+         <div class="form-group">
+        <label for="inputDate">Heure fin</label>
+             <div class="input-group date" id="time2" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#time2" th:field="*{HeureFin}">
+                        <div class="input-group-append" data-target="#time2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+            
+
+
+              <div class="form-group">
+                <label for="inputProjectLeader">Traitement</label>
+                <input type="text" id="inputProjectLeader" class="form-control" th:field="*{Traitement}">
+              </div>
+               
+              
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+
+
+<!--modal-->
+      <div class="modal fade" id="modal-lc">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <form th:method="post" th:object="${consultationObject}" th:action="@{'/Patient/'+${patient.id}+'/addConsultation'}">
+            <div class="modal-header">
+              <h4 class="modal-title">Ajouter Consultation</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="inputDate">Date</label>
+             <div class="input-group date" id="date5" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#date5" th:field="*{DateC}">
+                        <div class="input-group-append" data-target="#date5" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+              </div>
+
+               <div class="form-group">
+                        <label>Acte</label>
+                        <select class="form-control select2" id="selectActe" th:field="*{acte.NomA}">
+                            <option  th:disabled th:selected th:value > -- select an acte -- </option>
+                          <option th:each="acte : ${actes}" th:text="${acte.NomA}" th:value="${acte.NomA}"></option>
+                        </select>
+                      </div>
+
+                <div class="form-group">
+                    <label for="inputnbrSeance">nbr Seance</label>
+                    <input type="number" id="inputnbrSeance" class="form-control" value="0" step="1" th:field="*{NbrSeance}">
+                </div>
+
+                 <div class="form-group">
+                <label for="inputMontant">Montant</label>
+                <input type="number" id="inputMontant" class="form-control" value="0" step="1" th:field="*{Montant}">
+              </div>       
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+<th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<script>
+    //Date picker
+    $('#date5').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#date6').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#date7').datetimepicker({
+        format: 'MM/DD/YYYY'
+    });
+    $('#time1').datetimepicker({
+        format: 'LT'
+    });
+    $('#time2').datetimepicker({
+        format: 'LT'
+    });
+</script>
+</body>
+</html>

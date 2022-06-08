@@ -1,0 +1,104 @@
+
+<div th:fragment="getImages" th:remove="tag">
+    <script th:inline="javascript">
+        function parseImages(){
+            var consultation = [[${consultation.id}]];
+            var idList;
+            var preurl="http://localhost:8080/images/download/";
+            $.ajax({
+                url: "http://localhost:8080/getimages",
+                method: "POST",
+                data : ""+consultation,
+                contentType:'application/json',
+                dataType : "json",
+            })
+                .done(function(response){
+                    idList = response;
+                    //initialisation
+                    $("#gallery").empty();
+                    for(let i = 0; i < idList.length; i++){
+                        var url = preurl + idList[i];
+                        //img tag
+                        var img = $('<img/>', {
+                            alt: "white sample",
+                            class: "img-fluid mb-2"
+                        });
+                        img.attr("src", url);
+                        // a tag
+                        var ahref = $('<a/>');
+                        ahref.attr("data-toggle", "lightbox");
+                        ahref.attr("data-title", "sample 1 - white");
+                        ahref.attr("data-gallery", "gallery");
+                        ahref.attr("href", url);
+                        // div tag
+                        var div = $('<div/>');
+                        div.attr("class", "col-sm-2");
+                        ahref.append(img);
+                        div.append(ahref);
+                        $("#gallery").append(div);
+
+                    }
+                });
+        }
+        $(document).ready(parseImages());
+
+    </script>
+</div>
+
+<div th:fragment="sendImages" th:remove="tag">
+    <script th:inline="javascript">
+        // DropzoneJS Code Start
+        Dropzone.autoDiscover = false
+
+        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        var previewNode = document.querySelector("#template")
+        previewNode.id = ""
+        var previewTemplate = previewNode.parentNode.innerHTML
+        previewNode.parentNode.removeChild(previewNode)
+
+        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+            url: "/uploadimage", // Set the url
+            thumbnailWidth: 80,
+            thumbnailHeight: 80,
+            parallelUploads: 20,
+            previewTemplate: previewTemplate,
+            autoQueue: false, // Make sure the files aren't queued until manually added
+            previewsContainer: "#previews", // Define the container to display the previews
+            clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+        })
+        myDropzone.on("addedfile", function(file) {
+            // Hookup the start button
+            file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
+        })
+
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+            document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+        })
+
+        myDropzone.on("sending", function(file, xhr, formData){
+            var consultation = [[${consultation.id}]];
+            formData.append('consultation',consultation);
+            // Show the total progress bar when upload starts
+            document.querySelector("#total-progress").style.opacity = "1"
+            // And disable the start button
+            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+        })
+
+        // Hide the total progress bar when nothing's uploading anymore
+        myDropzone.on("queuecomplete", function(progress) {
+            document.querySelector("#total-progress").style.opacity = "0";
+            parseImages();
+        })
+
+        // Setup the buttons for all transfers
+        // The "add files" button doesn't need to be setup because the config
+        // `clickable` has already been specified.
+        document.querySelector("#actions .start").onclick = function() {
+            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+        }
+        document.querySelector("#actions .cancel").onclick = function() {
+            myDropzone.removeAllFiles(true)
+        }
+    </script>
+</div>

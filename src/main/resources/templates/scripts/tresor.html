@@ -1,0 +1,78 @@
+<div th:fragment="calcul" th:remove="tag">
+    <script th:inline="javascript">
+        var depenses=[[${depenses}]];
+        var reglements=[[${reglements}]];
+        remplirDepenses(depenses);
+        remplirReglements(reglements);
+        function personaliser(){
+            var dateD=new Date($("#dateD").val());
+            var dateF=new Date($("#dateF").val());
+            let depenseP=[];
+            let reglementP=[];
+            // pour Depense
+            for(const depense of depenses) {
+                var dateString = depense['date'];
+                var dateParts = dateString.split("/");
+                var date =new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+                if(date>=dateD && date<=dateF){
+                    depenseP.push(depense);
+                }
+            }
+            //pourReglement
+            for(const reglement of reglements) {
+                var dateString = reglement['datePayment'];
+                var dateParts = dateString.split("/");
+                var date =new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+                if(date>=dateD && date<=dateF){
+                 reglementP.push(reglement);
+                }
+
+            }
+            console.log(reglementP);
+            console.log(depenseP);
+            //remplir reglement
+            initTableReglement();
+           remplirReglements(reglementP);
+            //remplire Depense
+          // initTableDepense();
+         //   remplirDepenses(depenseP);
+        }
+
+        function remplirDepenses(Depenses){
+        for(const depense of Depenses) {
+            var tr = $('<tr/>');
+            var td1 = $('<td/>');
+            var td2 = $('<td/>');
+            var td3 = $('<td/>');
+            var td4 = $('<td/>');
+            td1.text(depense['id']);
+            td2.text(depense['date']);
+            td3.text(depense['nom']);
+            td4.text(depense['montant']);
+            tr.append(td1);
+            tr.append(td2);
+            tr.append(td3);
+            tr.append(td4);
+            $("#tbody1").append(tr)
+        }
+        }
+
+        function remplirReglements(Reglements){
+            for(const reglement of Reglements) {
+                var tr = $('<tr/>');
+                var td1 = $('<td/>');
+                var td2 = $('<td/>');
+                var td3 = $('<td/>');
+                td1.text(reglement['id']);
+                td2.text(reglement['datePayment']);
+                td3.text(reglement['montantPaye']);
+                tr.append(td1);
+                tr.append(td2);
+                tr.append(td3);
+                $("#tbody2").append(tr)
+            }
+        }
+        function initTableReglement(){$("#tbody2").empty();}
+        function initTableDepense(){  $("#tbody1").empty();}
+    </script>
+</div>

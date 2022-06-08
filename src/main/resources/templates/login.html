@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Spring Boot AdminLTE 2 | Login</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          name="viewport"/>
+    <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <img th:src="@{/dist/img/logo.gif}" style=" width:40%;height:auto;"/>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-card-body">
+        <p class="login-box-msg">Connexion</p>
+
+        <div th:if="${param.error}">
+            <div class="callout callout-danger">
+                <p>Username or password invalid!</p>
+            </div>
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="username" placeholder="username"/>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="password" placeholder="password"/>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 ml-3">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+</body>
+</html>

@@ -152,7 +152,7 @@
                       <td th:rowspan="${ordonance.nbrMedicament}" style="vertical-align : middle;text-align:center;">
                           <div class="btn-group btn-group-sm">
                               <a href="#" class="btn text-danger"><i class="fas fa-trash"></i></a>
-                              <a href="#" class="btn text-warning"><i class="fas fa-print"></i></a>
+                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/exportOrdonance/'+${ordonance.id}}" class="btn text-warning"><i class="fas fa-print"></i></a>
                           </div>
                       </td>
                     <td th:rowspan="${ordonance.nbrMedicament}" th:text="${ordonance.id}" style="vertical-align : middle;text-align:center;"></td>
@@ -198,7 +198,6 @@
                   <tr>
                     <th>Numero Certificat</th>
                     <th>Date Certificat</th>
-                    <th>nbr jour</th>
                       <th>Debut de Certificat </th>
                       <th>fin de Certificat </th>
                     <th></th>
@@ -208,13 +207,12 @@
                   <tr th:each="certificat : ${consultation.certificatSet}">
                       <td th:text="${certificat.id}"></td>
                       <td th:text="${certificat.DateCer}"></td>
-                      <td th:text="${certificat.Nbrjour}"></td>
                       <td th:text="${certificat.DebutCer}"></td>
                       <td th:text="${certificat.finCer}"></td>
                       <td>
                           <div class="btn-group btn-group-sm">
                               <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/deletecertificat/'+${certificat.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
-                              <a href="#" class="btn text-warning"><i class="fas fa-print"></i></a>
+                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/exportCertificat/'+${certificat.id}}" class="btn text-warning"><i class="fas fa-print"></i></a>
                           </div>
                       </td>
                   </tr>
@@ -223,7 +221,6 @@
                   <tr>
                <th>Numero Certificat</th>
                     <th>Date Certificat</th>
-                    <th>nbr jour</th>
                       <th>Debut de Certificat </th>
                       <th>fin de Certificat </th>
                     <th></th>
@@ -401,14 +398,6 @@
                         </div>
                     </div>
               </div>
-
-
-               <div class="form-group">
-                <label for="inputEstimatedBudget">nbr jour</label>
-                <input type="number" id="inputEstimatedBudget" class="form-control" value="0" step="1" th:field="*{Nbrjour}">
-              </div>
-
-
               <div class="form-group">
                 <label for="inputProjectLeader">Traitement</label>
                 <input type="text" id="inputProjectLeader" class="form-control" th:field="*{Traitement}">

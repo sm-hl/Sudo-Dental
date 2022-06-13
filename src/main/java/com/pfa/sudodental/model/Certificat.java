@@ -15,7 +15,6 @@ import java.util.Date;
 public class Certificat extends AbstractModel<Long> {
     private String Traitement;
     private String DateCer;
-    private Long Nbrjour;
-    private Date DebutCer;
-    private Date finCer;
+    private String DebutCer;
+    private String finCer;
 }

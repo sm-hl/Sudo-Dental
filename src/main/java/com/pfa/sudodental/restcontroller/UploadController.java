@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-public class UploadController {
+public class  UploadController {
     @Autowired
     ImageService imageService;
 

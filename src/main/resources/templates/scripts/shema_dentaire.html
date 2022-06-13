@@ -1,0 +1,36 @@
+<div th:fragment="SD" th:remove="tag">
+    <script th:inline="javascript">
+        var dents=[[${patient.dentList}]];
+        function show_id(clicked_id,clicked_shema) {
+            var index=false;
+            var id = document.getElementById("inputid");
+            // id.value="clicked_id";
+            id.setAttribute("value", clicked_id);
+
+            if (clicked_shema == 'Adulte') {
+                $('#Genre').val('Adulte');
+            } else {
+                $('#Genre').val('Enfant');
+            }
+            for(const dent of dents){
+                if(dent['numD']==clicked_id){
+                    index=true;
+                    $("#etatD").val(dent['etatD']);
+                    $("#descD").val(dent['description']);
+                    $("#ActeD option").each(function() {
+                        if(this.value==dent['acteD']){
+                            $("#ActeD option[value="+this.value+"]").prop('selected', true);
+                            $('.select2').select2();
+                            }
+                    });
+                }
+            }
+        if (!index){
+                $("#etatD").val("");
+                $("#descD").val("");
+               $("#ActeD option:selected").prop('selected', false);
+               $('.select2').select2();
+            }
+        }
+    </script>
+</div>

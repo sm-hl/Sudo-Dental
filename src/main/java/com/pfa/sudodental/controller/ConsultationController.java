@@ -88,12 +88,13 @@ public class ConsultationController {
     }
     @GetMapping("/Patient/{id}/consultation/{id2}/validerReglement/{ids}")
     public String validerReglement(@PathVariable(name = "id")Long id, @PathVariable("id2") Long id2,@PathVariable(name = "ids") Long ids){
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/DD/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         Date date=new Date();
         Consultation consultation=consultationService.get(id2);
          Seance seance=seanceService.get(ids);
          seance.getReglement().setMontantPaye(seance.getMontantSc());
          seance.getReglement().setDatePayment(formatter.format(date));
+         seance.getReglement().setFlux("entrant");
          seanceService.save(seance);
         return "redirect:/Patient/"+id+"/consultation/"+id2;
     }

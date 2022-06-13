@@ -49,7 +49,7 @@
 </div>
 <div th:fragment="menu" th:remove="tag">
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img th:src="@{/dist/img/logo2.png}" alt="logo sudo dental" class="brand-image img-circle elevation-3">
@@ -88,7 +88,7 @@
          <!-- GESTION -->
           <li class="nav-header">GESTION</li>
           <li class="nav-item">
-            <a href="/Patients" class="nav-link">
+            <a href="/Patients" th:class="${active eq 'Patient'? 'nav-link active' : 'nav-link'}">
               <i class="nav-icon fas fa-bed"></i>
               <p>
                 Patient
@@ -97,7 +97,7 @@
           </li>
           <li class="nav-item">
             <!-- <a href="pages/calendar.html" class="nav-link"> -->
-            <a href="/Rdvs" class="nav-link">
+            <a href="/Rdvs" th:class="${active eq 'Rdv'? 'nav-link active' : 'nav-link'}">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Rendez vous
@@ -106,7 +106,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/Attente" class="nav-link">
+            <a href="/Attente" th:class="${active eq 'Attente'? 'nav-link active' : 'nav-link'}">
               <i class="nav-icon fas fa-user-clock"></i>
               <p>
                 Salle d'attente
@@ -117,7 +117,7 @@
           <!-- ADMINISTRATION -->
           <li class="nav-header">ADMINISTRATION</li>
           <li class="nav-item">
-            <a href="/Depenses" class="nav-link">
+            <a href="/Depenses" th:class="${active eq 'GDepense'? 'nav-link active' : 'nav-link'}">
               <i class="nav-icon fas  fa-book-medical"></i>
               <p>
                 Depense
@@ -126,16 +126,16 @@
           </li>
           <li class="nav-item">
             <!-- <a href="pages/calendar.html" class="nav-link"> -->
-            <a href="/Tresorier" class="nav-link">
+            <a href="/Tresorier" th:class="${active eq 'Tresorier'? 'nav-link active' : 'nav-link'}">
               <i class="nav-icon fas fa-money-bill-wave"></i>
               <p>
-                Trisorerie
+                Tresorier
                 <!-- <span class="badge badge-info right">2</span> -->
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" th:class="${active eq 'Gacte' or active eq 'Gmedicament' ? 'nav-link active' : 'nav-link'}">
               <i class="nav-icon fas fa-wrench"></i>
               <p>
                 Reglage
@@ -144,14 +144,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/Actes" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="/Actes" th:class="${active eq 'Gacte' ? 'nav-link active' : 'nav-link'}">
+                  <i class="fa fa-hospital nav-icon"></i>
                   <p>Gestion des Actes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/Medicaments" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="/Medicaments" th:class="${active eq 'Gmedicament' ? 'nav-link active' : 'nav-link'}">
+                  <i class="fa fa-medkit nav-icon"></i>
                   <p>Gestion Medicaments</p>
                 </a>
               </li>
@@ -190,8 +190,6 @@
     <script th:src="@{plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
     <script th:src="@{plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
     <script th:src="@{plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
-    <script th:src="@{plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
-    <script th:src="@{plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
     <script th:src="@{plugins/jszip/jszip.min.js}"></script>
     <script th:src="@{plugins/pdfmake/pdfmake.min.js}"></script>
     <script th:src="@{plugins/pdfmake/vfs_fonts.js}"></script>
@@ -274,18 +272,6 @@
             $('#inputMontant').val(getMontant(actes,$(this).children("option:selected").val()));
         });
 
-        function show_id(clicked_id,clicked_shema) {
-
-            var id = document.getElementById("inputid");
-            // id.value="clicked_id";
-            id.setAttribute("value", clicked_id);
-            if (clicked_shema == 'Adulte') {
-                $('#Genre').val('Adulte');
-
-            } else {
-                $('#Genre').val('Enfant');
-            }
-        }
         var i=1;
         function create_div(){
             var medicaments = [[${medicaments}]];

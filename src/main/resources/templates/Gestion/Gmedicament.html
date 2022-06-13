@@ -7,7 +7,7 @@
   <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
   </base>
 </head>
-<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm" th:with="active=${'Gmedicament'}">
 <div class="wrapper">
   <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
   <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
@@ -39,8 +39,8 @@
               <!-- /.card-header -->
               <div class="card-body">
                    <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lm"> + ajouter Medicament</button>
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
                   <tr>
                     <th>Numero Medicament</th>
                     <th>Nom Medicament</th>
@@ -57,8 +57,7 @@
                     <td th:text="${medicament.Nbrgrain}"></td>
                     <td>
                       <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                        <a th:href="${'/deleteMedicament/'+medicament.id}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        <a th:href="${'/deleteMedicament/'+medicament.id}" class="btn text-danger"><i class="fas fa-trash"></i></a>
                       </div>
                     </td>
                   </tr>

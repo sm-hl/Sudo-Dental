@@ -27,8 +27,10 @@ public class FichPatientController {
      @GetMapping("/Patient/{id}")
     public String fichPatient(@PathVariable Long id,Model model){
         Patient patient =patientService.get(id);
+        patientService.calculAllMontant(patient);
+         model.addAttribute("patient",patient);
+        patientService.save(patient);
          List<Acte> acteList=acteService.getAll();
-        model.addAttribute("patient",patient);
         Acte acte=new Acte();
         Consultation consultation=new Consultation();
         consultation.setActe(acte);
@@ -49,6 +51,7 @@ public class FichPatientController {
    Patient patient=patientService.get(id);
    //avoid problem
    rdv.setId(null);
+   rdv.setEtat(false);
    rdvService.save(rdv);
    patient.getRdvSet().add(rdv);
    patientService.save(patient);
@@ -70,6 +73,7 @@ public class FichPatientController {
         Patient patient=patientService.get(id);
         Acte acte=acteService.getActeByNom(consultation.getActe().getNomA());
         consultation.setActe(acte);
+        consultation.setEtatReglement(false);
         patient.getConsultationSet().add(consultation);
         patientService.save(patient);
         return "redirect:/Patient/"+id;
@@ -85,7 +89,8 @@ public class FichPatientController {
 
     @PostMapping("/Patient/{id}/validerSD")
     public String validerSD(@ModelAttribute Dent dent,@PathVariable Long id, Model model){
-
+         //avoid problem
+        dent.setId(null);
         Patient patient=patientService.get(id);
   if (!patient.modifierDent(dent)){
             patient.getDentList().add(dent);

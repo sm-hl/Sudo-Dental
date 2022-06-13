@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReglementService extends AbstractService<Reglement,Long>{
 
@@ -16,5 +18,11 @@ public class ReglementService extends AbstractService<Reglement,Long>{
     protected JpaRepository<Reglement, Long> getRepository(){
         return reglementRepository;
 
+    }
+    public List<Reglement> getAllRPaye(){
+       return reglementRepository.getAllRPaye();
+    }
+    public List<Reglement> getAllDPaye(){
+        return reglementRepository.getAllDPaye();
     }
 }

@@ -3,11 +3,12 @@ package com.pfa.sudodental.controller;
 import com.pfa.sudodental.model.*;
 import com.pfa.sudodental.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -51,22 +52,22 @@ public class MenuController {
     }
     @RequestMapping("/Rdvs")
     public String listRdv(Model model){
-        List<Rdv> rdvs=rdvService.getAll();
+        Date date=new Date();
+        SimpleDateFormat formatter_1=new SimpleDateFormat("E, dd MMM yyyy");
+        model.addAttribute("dateNow",  formatter_1.format(date));
+        SimpleDateFormat formatter_2=new SimpleDateFormat("MM/dd/yyyy");
+        List<Rdv> rdvs=rdvService.getRdvByDate(formatter_2.format(date));
         model.addAttribute("rdvs",rdvs);
+        model.addAttribute("salleAttobject",new SalleAttente());
         return "Gestion/Rdv";
     }
     @RequestMapping("/Attente")
     public String listAttente(Model model){
-        List<Patient> patients=patientService.getAll();
-        List<SalleAttente> salleAttentes=salleAttenteService.getAll();
-        Patient patient=new Patient();
-        DateArrive dateArrive=new DateArrive();
-        SalleAttente salleAttente=new SalleAttente();
-        salleAttente.setPatient(patient);
-        salleAttente.setDateArrive(dateArrive);
+        SimpleDateFormat formatter=new SimpleDateFormat("MM/dd/yyyy");
+        Date date=new Date();
+        List<SalleAttente> salleAttentes=salleAttenteService.getByDate(formatter.format(date));
         model.addAttribute("salleAttentes",salleAttentes);
-        model.addAttribute("salleAttobject",salleAttente);
-        model.addAttribute("patients",patients);
+        model.addAttribute("salleAttobject",new SalleAttente());
         return "Gestion/Attente";
     }
     @RequestMapping("/Depenses")
@@ -78,9 +79,9 @@ public class MenuController {
     }
     @RequestMapping("/Tresorier")
     public String tresorier(Model model){
-        List<Depense> depenses=depenseService.getAll();
-        List<Reglement> reglements=reglementService.getAll();
-        model.addAttribute("reglements",reglements);
+        List<Reglement> depenses=reglementService.getAllDPaye();
+        List<Reglement> recettes=reglementService.getAllRPaye();
+        model.addAttribute("recettes",recettes);
         model.addAttribute("depenses",depenses);
         return "Gestion/Tresorier";
     }

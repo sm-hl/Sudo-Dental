@@ -8,7 +8,7 @@
   <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
   </base>
 </head>
-<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm" th:with="active=${'GDepense'}">
 <div class="wrapper">
 
   <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
@@ -41,8 +41,8 @@
               <!-- /.card-header -->
               <div class="card-body">
                    <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-la"> + ajouter Article</button>
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
                   <tr>
                     <th>Numero Dépense</th>
                     <th>Date d'article</th>
@@ -57,8 +57,8 @@
                     <td th:text="${depense.id}"></td>
                     <td th:text="${depense.date}"></td>
                     <td th:text="${depense.nom}"></td>
-                    <th:block th:switch="${depense.etat}">
-                      <td th:case="false">
+                    <th:block th:switch="${depense.reglement.DatePayment}">
+                      <td th:case="null">
                         <span class="badge badge-warning">non regle</span>
                       </td>
                       <td th:case="*" >
@@ -67,9 +67,9 @@
                     </th:block>
                     <td th:text="${depense.montant}"></td>
                     <td> 
-                      <div class="btn-group btn-group-sm">
-                        <a href="#" class="btn btn-info"><i class="fas fa-sign-in-alt"></i></a>
-                        <a th:href="@{'/deleteDepense/'+${depense.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      <div class="btn-group btn-group-sm" th:switch="${depense.reglement.DatePayment}">
+                        <a th:case="null" th:href="@{'/Depenses/validerDepense/'+${depense.id}}" class="btn text-info"><i class="fas fa-sign-in-alt"></i></a>
+                        <a th:href="@{'/Depenses/deleteDepense/'+${depense.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
                       </div>
                     </td>
                   </tr>
@@ -99,7 +99,7 @@
       <div class="modal fade" id="modal-la">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <form th:method="post" th:object="${depenseObject}" th:action="@{/addDepense}">
+            <form th:method="post" th:object="${depenseObject}" th:action="@{/Depenses/addDepense}">
             <div class="modal-header">
               <h4 class="modal-title">Ajouter Article</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -8,7 +8,7 @@
   <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
   </base>
 </head>
-<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm" th:with="active=${'Tresorier'}">
 <div class="wrapper">
   <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
   <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
@@ -34,74 +34,67 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-          <!-- start search -->
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="form-group">
-                        <div class="input-group input-group-lg">
-                        <div class="form-group">
-                          <label style="font-size: large; padding: 10px;">De :</label>
-                          <div class="input-group date" id="date2" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#date2" placeholder="MM/DD/YYY" id="dateD" >
-                            <div class="input-group-append" data-target="#date2" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                        <div class="form-group">
-                          <label style="font-size: large; padding: 10px;">a :</label>
-                          <div class="input-group date" id="date3" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#date3" placeholder="MM/DD/YYY" id="dateF" >
-                            <div class="input-group-append" data-target="#date3" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                          <div class="input-append">
-                              <button type="button" style="height: 60%;  margin-left: 10px;" class="btn btn-lg btn-default" onclick="personaliser()">
-                                  <i class="fa fa-search"></i>
-                              </button>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+            <div class="form-group">
+              <div class="input-group input-group-lg">
+                <div class="form-group">
+                  <div class="input-group date" id="date2" data-target-input="nearest">
+                    <label style="font-size: large;margin:0px 10px 0px 30px;">De :</label>
+                    <input type="text" class="form-control datetimepicker-input" data-target="#date2" id="dateD">
+                    <div class="input-group-append picker" data-target="#date2" data-toggle="datetimepicker">
+                      <div class="input-group-text picker"><i class="fa fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group date" id="date3" data-target-input="nearest">
+                    <label style="font-size: large;margin:0px 10px 0px 30px;">a :</label>
+                    <input type="text" class="form-control datetimepicker-input" data-target="#date3" id="dateF">
+                    <div class="input-group-append picker" data-target="#date3" data-toggle="datetimepicker">
+                      <div class="input-group-text picker"><i class="fa fa-calendar"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-append">
+                  <button type="button" onclick="personaliser()" style="height: 60%;  margin-left: 10px;" class="btn btn-lg btn-default">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
           <!-- end search -->
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <h1>Réglements</h1>
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+                <h1>Les recettes</h1>
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
                   <tr>
-                    <th>Numero Réglement</th>
-                    <th>Date Réglement</th>
+                    <th>Numero Recette</th>
+                    <th>Date Recette</th>
                     <th>Montant</th>
                   </tr>
                   </thead>
                   <tbody id="tbody2">
                   </tbody>
-                  <!-- <tfoot>
+                  <tfoot>
                   <tr>
-                    <th>Numero Article</th>
-                    <th>Nom Article</th>
-                    <th>etat d'Article</th>
+                    <th>Numero Recette</th>
+                    <th>Date Recette</th>
                     <th>Montant</th>
-                    <th></th>
                   </tr>
-                  </tfoot> -->
+                  </tfoot>
                 </table>
                 <!-- start  total -->
                 <div class="card-body">
                   <div class="row  float-right">
-                    <label for="totalRegl" style="width:50%;" class="col-form-label">Total Réglements :</label>
+                    <label for="totalRecette" style="width:50%;" class="col-form-label">Total Réglements :</label>
                     <div style="width:50%;">
-                      <input type="text" id="totalRegl" class="form-control">
+                      <input type="text" id="totalRecette" class="form-control" disabled>
                     </div>
                   </div>
                 </div>
@@ -117,33 +110,30 @@
               <div class="card-body">
                 <h1>Dépenses</h1>
                    <!-- <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-la"> + ajouter Article</button> -->
-                <table id="example2" class="table table-bordered table-striped">
-                  <thead>
+                <table id="example2" class="table">
+                  <thead class="thead-dark">
                   <tr>
                     <th>Numero Dépense</th>
-                    <th>Date d'article</th>
-                    <th>Nom Article</th>
+                    <th>Date Depense</th>
                     <th>Montant</th>
                   </tr>
                   </thead>
                   <tbody id="tbody1">
                   </tbody>
-                  <!-- <tfoot>
+                  <tfoot>
                   <tr>
-                    <th>Numero Article</th>
-                    <th>Nom Article</th>
-                    <th>etat d'Article</th>
+                    <th>Numero Dépense</th>
+                    <th>Date Depense</th>
                     <th>Montant</th>
-                    <th></th>
                   </tr>
-                  </tfoot> -->
+                  </tfoot>
                 </table>
                 <!-- start  total -->
                 <div class="card-body">
                   <div class="row  float-right">
-                    <label for="totalRegl" style="width:50%;" class="col-form-label">Total Dépences :</label>
+                    <label for="totalDepense" style="width:50%;" class="col-form-label">Total Dépences :</label>
                     <div style="width:50%;">
-                      <input type="text" name="totalRegl" class="form-control">
+                      <input type="text" id="totalDepense" class="form-control" disabled>
                     </div>
                   </div>
                 </div>
@@ -156,9 +146,9 @@
             <!-- start  total -->
             <div class="card-body">
               <div class="row  float-right">
-                <label for="totalRegl" style="width:50%;" class="col-form-label">Valeur Ajoutée de Cabinet :</label>
+                <label for="VA" style="width:50%;" class="col-form-label">Valeur Ajoutée de Cabinet :</label>
                 <div style="width:50%;">
-                  <input type="text" name="totalRegl" class="form-control">
+                  <input type="text" name="totalRegl" class="form-control" id="VA" disabled>
                 </div>
               </div>
             </div>

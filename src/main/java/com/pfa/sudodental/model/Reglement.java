@@ -15,4 +15,5 @@ import java.util.Date;
 public class Reglement extends AbstractModel<Long> {
     private Float MontantPaye;
     private String DatePayment;
+    private String flux;
 }

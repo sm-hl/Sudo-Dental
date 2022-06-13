@@ -15,6 +15,12 @@ import java.util.Date;
 public class Depense extends AbstractModel<Long> {
     private String nom;
     private String date;
-    private Boolean etat;
     private Float montant;
+    @OneToOne(
+            cascade=CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "reglement_id")
+    Reglement reglement;
 }

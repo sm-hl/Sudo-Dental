@@ -109,8 +109,8 @@
               <div class="form-group">
                 <label for="inputClientCompany">sexe</label>
          <select class="form-control"th:field="*{Sex}">
-             <option th:selected="${patient.Sex eq 'Male'}"  th:value="${'Male'}">Male</option>
-             <option th:selected="${patient.Sex eq 'Female'}"th:value="${'Female'}">Female</option>
+             <option th:selected="${patient.Sex eq 'Masculin'}"  th:value="${'Masculin'}">Masculin</option>
+             <option th:selected="${patient.Sex eq 'Feminin'}"th:value="${'Feminin'}">Feminin</option>
          </select>
               </div>
               <div class="form-group">
@@ -308,8 +308,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputEstimatedBudget" >Etat de Dent</label>
-                                        <input type="text" id="inputEstimatedBudget" class="form-control" th:field="*{EtatD}" >
+                                        <label >Etat de Dent</label>
+                                        <input type="text" id="etatD" class="form-control" th:field="*{EtatD}" >
                                     </div>
 
 
@@ -323,7 +323,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputAdresse">description</label>
-                                        <textarea class="form-control" rows="3" placeholder="Enter ..." th:field="*{Description}"  ></textarea>
+                                        <textarea class="form-control" rows="3" placeholder="Enter ..." th:field="*{Description}" id="descD"></textarea>
                                     </div>
 
                                 </div>
@@ -355,8 +355,8 @@
               <!-- /.card-header -->
               <div class="card-body">
                    <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Consultation</button>
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
                   <tr>
                     <th>Date</th>
                     <th>nbr Seance</th>
@@ -385,8 +385,8 @@
                       <td th:text="${consultation.MontantPaye}"></td>
                       <td>
                           <div class="btn-group btn-group-sm">
-                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                              <a th:href="@{'/Patient/'+${patient.id}+'/deleteConsultation/'+${consultation.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}}" class="btn text-info"><i class="fas fa-eye"></i></a>
+                              <a th:href="@{'/Patient/'+${patient.id}+'/deleteConsultation/'+${consultation.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
                           </div>
                       </td>
                   </tr>
@@ -423,8 +423,8 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
+                <table id="example1" class="table">
+                  <thead class="thead-dark">
                   <tr>
                     <th>Date</th>
                     <th>Heure Debut</th>
@@ -441,18 +441,23 @@
                       <td th:text="${rdv.HeureFin}"></td>
                       <td th:text="${rdv.Traitement}"></td>
                       <th:block th:switch="${rdv.Etat}">
-                      <td th:case="true">
+                          <th:block th:case="true" >
+                      <td>
                           <span class="badge badge-info">valide</span>
                       </td>
-                          <td th:case="*" >
+                      <td></td>
+                          </th:block>
+                          <th:block th:case="*" >
+                          <td>
                               <span class="badge badge-warning">non valide</span>
                           </td>
+                          <td>
+                              <div class="btn-group btn-group-sm">
+                                  <a th:href="@{'/Patient/'+${patient.id}+'/deleteRdv/'+${rdv.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
+                              </div>
+                          </td>
+                          </th:block>
                       </th:block>
-                      <td>
-                          <div class="btn-group btn-group-sm">
-                              <a th:href="@{'/Patient/'+${patient.id}+'/deleteRdv/'+${rdv.id}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                          </div>
-                      </td>
                   </tr>
                   </tbody>
                   <tfoot>
@@ -629,6 +634,7 @@
 <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
 </div>
 <th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<th:block th:replace="~{scripts/shema_dentaire :: SD}"></th:block>
 <script>
     //Date picker
     $('#date5').datetimepicker({

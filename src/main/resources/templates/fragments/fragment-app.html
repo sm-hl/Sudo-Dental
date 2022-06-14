@@ -60,12 +60,22 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <th:block sec:authorize="hasAuthority('MED')">
         <div class="image">
-          <img th:src="@{/dist/img/medcine.jpg}" class="img-circle elevation-2" alt="User Image">
+          <img th:src="@{/dist/img/med.jpg}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Medecin</a>
+          <a class="d-block">Medecin</a>
         </div>
+          </th:block>
+          <th:block sec:authorize="hasAuthority('SEC')">
+              <div class="image">
+                  <img th:src="@{/dist/img/sec.jpg}" class="img-circle elevation-2" alt="User Image">
+              </div>
+              <div class="info">
+                  <a class="d-block">Infermiere</a>
+              </div>
+          </th:block>
       </div>
   
       <!-- SidebarSearch Form -->
@@ -113,7 +123,7 @@
               </p>
             </a>
           </li>
-          
+          <th:block sec:authorize="hasAuthority('MED')">
           <!-- ADMINISTRATION -->
           <li class="nav-header">ADMINISTRATION</li>
           <li class="nav-item">
@@ -157,6 +167,7 @@
               </li>
             </ul>
           </li>
+          </th:block>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

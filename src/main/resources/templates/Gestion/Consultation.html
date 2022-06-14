@@ -67,7 +67,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-ls"> + ajouter Seance</button>
+                  <th:block sec:authorize="hasAuthority('MED')"><button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-ls"> + ajouter Seance</button></th:block>
                 <table id="example1" class="table">
                   <thead class="thead-dark">
                   <tr>
@@ -94,10 +94,12 @@
                       </th:block>
                       <td th:text="${seance.reglement.DatePayment ?:'-'}"></td>
                     <td >
+                        <th:block sec:authorize="hasAuthority('MED')">
                       <div class="btn-group btn-group-sm" th:switch="${seance.reglement.DatePayment}">
                         <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/deleteseance/'+${seance.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
                           <a th:case="null" th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/validerReglement/'+${seance.id}}" class="btn text-success"><i class="fas fa-sign-in-alt"></i></a>
                       </div>
+                        </th:block>
                     </td>
                   </tr>
                 
@@ -132,8 +134,8 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                  
-                  <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lo"> + ajouter Ordonance</button>
+
+                  <th:block sec:authorize="hasAuthority('MED')"><button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lo"> + ajouter Ordonance</button> </th:block>
 
                 <table id="example1" class="table">
                   <thead class="thead-dark">
@@ -151,7 +153,7 @@
                  <th:block th:if="${status.index eq 0}">
                       <td th:rowspan="${ordonance.nbrMedicament}" style="vertical-align : middle;text-align:center;">
                           <div class="btn-group btn-group-sm">
-                              <a href="#" class="btn text-danger"><i class="fas fa-trash"></i></a>
+                              <th:block sec:authorize="hasAuthority('MED')"> <a href="#" class="btn text-danger"><i class="fas fa-trash"></i></a></th:block>
                               <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/exportOrdonance/'+${ordonance.id}}" class="btn text-warning"><i class="fas fa-print"></i></a>
                           </div>
                       </td>
@@ -190,8 +192,8 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                  
-        <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Certificat</button>
+
+                  <th:block sec:authorize="hasAuthority('MED')"> <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Certificat</button> </th:block>
 
                 <table id="example1" class="table">
                   <thead class="thead-dark">
@@ -211,7 +213,7 @@
                       <td th:text="${certificat.finCer}"></td>
                       <td>
                           <div class="btn-group btn-group-sm">
-                              <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/deletecertificat/'+${certificat.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
+                              <th:block sec:authorize="hasAuthority('MED')">  <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/deletecertificat/'+${certificat.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a> </th:block>
                               <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}+'/exportCertificat/'+${certificat.id}}" class="btn text-warning"><i class="fas fa-print"></i></a>
                           </div>
                       </td>
@@ -242,7 +244,7 @@
                  <div class="row">
             <div class="row" id="gallery">
             </div>
-
+           <th:block sec:authorize="hasAuthority('MED')">
             <div class="col-md-12">
               <div class="card-body">
                 <div id="actions" class="row">
@@ -284,6 +286,7 @@
               </div>
               <!-- /.card-body -->
           </div>
+           </th:block>
         </div> 
 
 

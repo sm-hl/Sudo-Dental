@@ -76,6 +76,7 @@ public class FichPatientController {
         consultation.setEtatReglement(false);
         patient.getConsultationSet().add(consultation);
         patientService.save(patient);
+        model.addAttribute("modal",true);
         return "redirect:/Patient/"+id;
     }
     @GetMapping("/Patient/{id}/deleteConsultation/{idC}")

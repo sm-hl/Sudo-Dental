@@ -216,7 +216,7 @@
         </div>
                     </div>
                       </form>
-                  </div  >
+                  </div>
                   <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
                      <div style="display: flex; justify-content: space-around;">
                       <img  th:src="@{/dist/img/adulte.jpg}" alt="shema dentaire adulte" usemap="#adulte" style="height: 496px; width: 300px;"/>
@@ -331,7 +331,7 @@
 
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary">Modifier</button>
+                                    <th:block sec:authorize="hasAuthority('MED')"> <button type="submit" class="btn btn-primary">Modifier</button></th:block>
                                 </div>
                                 </form>
                             </div>
@@ -354,7 +354,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                   <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Consultation</button>
+                  <th:block sec:authorize="hasAuthority('MED')">  <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Consultation</button></th:block>
                 <table id="example1" class="table">
                   <thead class="thead-dark">
                   <tr>
@@ -368,7 +368,6 @@
                   </tr>
                   </thead>
                   <tbody>
-
                   <tr th:each="consultation: ${patient.consultationSet}">
                       <td th:text="${consultation.DateC}"></td>
                       <td th:text="${consultation.NbrSeance}"></td>
@@ -386,7 +385,7 @@
                       <td>
                           <div class="btn-group btn-group-sm">
                               <a th:href="@{'/Patient/'+${patient.id}+'/consultation/'+${consultation.id}}" class="btn text-info"><i class="fas fa-eye"></i></a>
-                              <a th:href="@{'/Patient/'+${patient.id}+'/deleteConsultation/'+${consultation.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a>
+                              <th:block sec:authorize="hasAuthority('MED')"> <a th:href="@{'/Patient/'+${patient.id}+'/deleteConsultation/'+${consultation.id}}" class="btn text-danger"><i class="fas fa-trash"></i></a></th:block>
                           </div>
                       </td>
                   </tr>

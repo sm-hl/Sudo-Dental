@@ -104,32 +104,34 @@ public class ConsultationController {
         return "redirect:/Patient/"+id+"/consultation/"+id2;
     }
     @GetMapping("/Patient/{id}/consultation/{id2}/exportOrdonance/{id3}")
-    public String exportOToPDF( @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2,@PathVariable("id3") Long id3, HttpServletResponse response) throws DocumentException, IOException {
+    public void exportOToPDF( @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2,@PathVariable("id3") Long id3, HttpServletResponse response) throws DocumentException, IOException {
         Ordonance ordonance=ordonanceService.get(id3);
         Patient patient=patientService.get(id);
-        OrdonanceExport ordonanceExport=new OrdonanceExport(ordonance,patient);
-        ordonanceExport.writeData(response);
 
         response.setContentType("application/pdf");
         String headerKey = "filename";
         String headerValue = "attachment; filename=ordonance"+".pdf";
         response.setHeader(headerKey, headerValue);
 
-        return "redirect:/Patient/"+id+"/consultation/"+id2;
+        OrdonanceExport ordonanceExport=new OrdonanceExport(ordonance,patient);
+        ordonanceExport.writeData(response);
+
+        //return "redirect:/Patient/"+id+"/consultation/"+id2;
     }
     @GetMapping("/Patient/{id}/consultation/{id2}/exportCertificat/{id3}")
-    public String exportCToPDF( @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2,@PathVariable("id3") Long id3, HttpServletResponse response) throws DocumentException, IOException {
+    public void exportCToPDF( @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2,@PathVariable("id3") Long id3, HttpServletResponse response) throws DocumentException, IOException {
         Certificat certificat=certificatService.get(id3);
         Patient patient=patientService.get(id);
-        CertificatExport certificatExport=new CertificatExport(certificat,patient);
-        certificatExport.writeData(response);
 
         response.setContentType("application/pdf");
         String headerKey = "filename";
         String headerValue = "attachment; filename=Certificat"+".pdf";
         response.setHeader(headerKey, headerValue);
 
-        return "redirect:/Patient/"+id+"/consultation/"+id2;
+        CertificatExport certificatExport=new CertificatExport(certificat,patient);
+        certificatExport.writeData(response);
+        response.sendRedirect("/Patient/"+id+"/consultation/"+id2);
+      // return "redirect:/Patient/"+id+"/consultation/"+id2;
     }
 }
 

@@ -1,7 +1,7 @@
 package com.pfa.sudodental.service;
 
 
-import com.pfa.sudodental.DTO.OrdonanceDTO;
+import com.pfa.sudodental.dto.OrdonanceDTO;
 import com.pfa.sudodental.model.Decrire;
 import com.pfa.sudodental.model.Ordonance;
 import com.pfa.sudodental.repository.MedicamentRepository;

@@ -4,6 +4,7 @@ import com.pfa.sudodental.model.DossierMedicale;
 import com.pfa.sudodental.model.Patient;
 import com.pfa.sudodental.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ MenuController menuController;
         patientService.save(patientobject);
         return menuController.listPatient(model);
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("/deletePatient/{id}")
     public String delete(@PathVariable Long id,Model model){
         patientService.delete(id);

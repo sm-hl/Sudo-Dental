@@ -67,7 +67,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                  <th:block sec:authorize="hasAuthority('MED')"><button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-ls"> + ajouter Seance</button></th:block>
+                  <th:block sec:authorize="hasAuthority('MED')"><button type="button" class="btn btn-block btn-info col-2 mb-2" data-toggle="modal" data-target="#modal-ls"> + ajouter Seance</button></th:block>
                 <table id="example1" class="table">
                   <thead class="thead-dark">
                   <tr>
@@ -135,7 +135,7 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-                  <th:block sec:authorize="hasAuthority('MED')"><button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lo"> + ajouter Ordonance</button> </th:block>
+                  <th:block sec:authorize="hasAuthority('MED')"><button type="button" class="btn btn-block btn-info col-2 mb-2" data-toggle="modal" data-target="#modal-lo"> + ajouter Ordonance</button> </th:block>
 
                 <table id="example1" class="table">
                   <thead class="thead-dark">
@@ -193,7 +193,7 @@
               <!-- /.card-header -->
               <div class="card-body">
 
-                  <th:block sec:authorize="hasAuthority('MED')"> <button type="button" class="btn btn-block btn-primary col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Certificat</button> </th:block>
+                  <th:block sec:authorize="hasAuthority('MED')"> <button type="button" class="btn btn-block btn-info col-2 mb-2" data-toggle="modal" data-target="#modal-lc"> + ajouter Certificat</button> </th:block>
 
                 <table id="example1" class="table">
                   <thead class="thead-dark">
@@ -249,11 +249,11 @@
               <div class="card-body">
                 <div id="actions" class="row">
                   <div class="col-lg-6">
-                    <div class="btn-group w-100"> <span class="btn btn-success col fileinput-button">
+                    <div class="btn-group w-75"> <span class="btn btn-success col fileinput-button">
                         <i class="fas fa-plus"></i>
                         <span>Add files</span> </span>
-                      <button type="submit" class="btn btn-primary col start"> <i class="fas fa-upload"></i> <span>Start upload</span> </button>
-                      <button type="reset" class="btn btn-warning col cancel"> <i class="fas fa-times-circle"></i> <span>Cancel upload</span> </button>
+                      <button type="submit" class="btn btn-info col start"> <i class="fas fa-upload"></i> <span>Start upload</span> </button>
+                      <button type="reset" class="btn btn-danger col cancel"> <i class="fas fa-times-circle"></i> <span>Cancel upload</span> </button>
                     </div>
                   </div>
                   <div class="col-lg-6 d-flex align-items-center">
@@ -277,8 +277,7 @@
                     <div class="col-auto d-flex align-items-center">
                       <div class="btn-group">
                         <button class="btn btn-primary start"> <i class="fas fa-upload"></i> <span>Start</span> </button>
-                        <button data-dz-remove class="btn btn-warning cancel"> <i class="fas fa-times-circle"></i> <span>Cancel</span> </button>
-                        <button data-dz-remove class="btn btn-danger delete"> <i class="fas fa-trash"></i> <span>Delete</span> </button>
+                        <button data-dz-remove class="btn btn-danger cancel"> <i class="fas fa-times-circle"></i> <span>Cancel</span> </button>
                       </div>
                     </div>
                   </div>
@@ -348,7 +347,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-              <button type="submit" class="btn btn-primary">Ajouter</button>
+              <button type="submit" class="btn btn-info">Ajouter</button>
             </div>
               </form>
           </div>
@@ -411,7 +410,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-              <button type="submit" class="btn btn-primary">Ajouter</button>
+              <button type="submit" class="btn btn-info">Ajouter</button>
             </div>
               </form> </div>
           <!-- /.modal-content -->
@@ -456,11 +455,11 @@
                             </div>
 
                     </div>
-                              <button onclick="create_div()" type="button" class="btn btn-primary">Ajouter</button>
+                              <button onclick="create_div()" type="button" class="btn btn-info">Ajouter</button>
                </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-              <button type="submit" class="btn btn-primary">Ajouter</button>
+              <button type="submit" class="btn btn-info">Ajouter</button>
             </div>
               </form>
           </div>

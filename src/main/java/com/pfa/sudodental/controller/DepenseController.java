@@ -6,6 +6,7 @@ import com.pfa.sudodental.model.Reglement;
 import com.pfa.sudodental.model.Seance;
 import com.pfa.sudodental.service.DepenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,7 +20,7 @@ import java.util.Date;
 public class DepenseController {
     @Autowired
     DepenseService depenseService;
-
+    @PreAuthorize("hasAuthority('MED')")
     @PostMapping("Depenses/addDepense")
     public String add(@ModelAttribute Depense depense) {
         //avoid problem
@@ -28,11 +29,13 @@ public class DepenseController {
         depenseService.save(depense);
         return "redirect:/Depenses";
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("Depenses/deleteDepense/{id}")
     public String delete(@PathVariable Long id){
         depenseService.delete(id);
         return "redirect:/Depenses";
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("/Depenses/validerDepense/{idd}")
     public String validerReglement(@PathVariable(name = "idd") Long idd){
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");

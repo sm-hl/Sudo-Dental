@@ -30,21 +30,21 @@ public class Patient extends AbstractModel<Long> {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "patient_id")
-    private Set<Consultation> consultationSet=new HashSet<>();
+    private List<Consultation> consultationSet=new ArrayList<>();
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "patient_id")
-    private Set<Dent> dentList=new HashSet<>();
+    private List<Dent> dentList=new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy="patient"
     )
-    private Set<Rdv> rdvSet=new HashSet<>();
+    private List<Rdv> rdvSet=new ArrayList<>();
 
     @OneToOne(
             cascade = CascadeType.ALL,
@@ -142,27 +142,27 @@ public class Patient extends AbstractModel<Long> {
         Adresse = adresse;
     }
 
-    public Set<Consultation> getConsultationSet() {
+    public List<Consultation> getConsultationSet() {
         return consultationSet;
     }
 
-    public void setConsultationSet(Set<Consultation> consultationSet) {
+    public void setConsultationSet(List<Consultation> consultationSet) {
         this.consultationSet = consultationSet;
     }
 
-    public Set<Dent> getDentList() {
+    public List<Dent> getDentList() {
         return dentList;
     }
 
-    public void setDentList(Set<Dent> dentList) {
+    public void setDentList(List<Dent> dentList) {
         this.dentList = dentList;
     }
 
-    public Set<Rdv> getRdvSet() {
+    public List<Rdv> getRdvSet() {
         return rdvSet;
     }
 
-    public void setRdvSet(Set<Rdv> rdvSet) {
+    public void setRdvSet(List<Rdv> rdvSet) {
         this.rdvSet = rdvSet;
     }
 

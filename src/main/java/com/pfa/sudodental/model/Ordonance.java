@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -22,5 +20,5 @@ public class Ordonance extends AbstractModel<Long> {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private Set<Decrire> decrireList=new HashSet<>();
+    private List<Decrire> decrireList=new ArrayList<>();
 }

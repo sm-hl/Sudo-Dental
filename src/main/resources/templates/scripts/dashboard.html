@@ -1,0 +1,386 @@
+<div th:fragment="dashcomp" th:remove="tag">
+    <!-- ./wrapper -->
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/fullcalendar/main.js"></script>
+    <!-- jQuery UI -->
+    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="plugins/raphael/raphael.min.js"></script>
+    <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="dist/js/pages/dashboard2.js"></script>
+    <!-- Page specific script -->
+    <script th:inline="javascript">
+        $(function () {
+            /* ChartJS
+             * -------
+             * Here we will create a few charts using ChartJS
+             */
+
+            //--------------
+            //- AREA CHART -
+            //--------------
+
+            // Get context with jQuery - using jQuery's .get() method.
+            var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+            var chartDepense=[[${chartDepense}]];
+            var chartRecette=[[${chartRecette}]];
+            console.log(chartDepense);
+            console.log(chartRecette);
+
+            var areaChartData = {
+                labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
+                datasets: [
+                    {
+                        label               : 'Depenses',
+                        backgroundColor     : 'rgba(60,141,188,0.9)',
+                        borderColor         : 'rgba(60,141,188,0.8)',
+                        pointRadius         : false,
+                        pointColor          : '#3b8bba',
+                        pointStrokeColor    : 'rgba(60,141,188,1)',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data                : chartDepense
+                    },
+                    {
+                        label               : 'Recetes',
+                        backgroundColor     : 'rgba(210, 214, 222, 1)',
+                        borderColor         : 'rgba(210, 214, 222, 1)',
+                        pointRadius         : false,
+                        pointColor          : 'rgba(210, 214, 222, 1)',
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data                : chartRecette
+                    },
+                ]
+            }
+
+            var areaChartOptions = {
+                maintainAspectRatio : false,
+                responsive : true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines : {
+                            display : false,
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines : {
+                            display : false,
+                        }
+                    }]
+                }
+            }
+
+            // This will get the first returned node in the jQuery collection.
+            new Chart(areaChartCanvas, {
+                type: 'line',
+                data: areaChartData,
+                options: areaChartOptions
+            })
+
+            //-------------
+            //- Patient CHART -
+       var chartAge=[[${chartAge}]];
+            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+            var donutData        = {
+                labels: [
+                    '18-30',
+                    '30-40',
+                    '40-50',
+                    '50-60',
+                    'de 60 au plus',
+                    'moins de 18',
+                ],
+                datasets: [
+                    {
+                        data: chartAge,
+                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                    }
+                ]
+            }
+            var donutOptions     = {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            new Chart(donutChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+
+
+            //- Patient CHART -
+            var chartSex=[[${chartSex}]];
+            var donutChartCanvas = $('#donutChart2').get(0).getContext('2d')
+            var donutData        = {
+                labels: [
+                    'Masculin',
+                    'Feminin',
+                ],
+                datasets: [
+                    {
+                        data: chartSex,
+                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                    }
+                ]
+            }
+            var donutOptions     = {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            new Chart(donutChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+
+        })
+
+        // CALENDAR
+        $(function () {
+
+            /* initialize the external events
+             -----------------------------------------------------------------*/
+            function ini_events(ele) {
+                ele.each(function () {
+
+                    // create an Event Object (https://fullcalendar.io/docs/event-object)
+                    // it doesn't need to have a start or end
+                    var eventObject = {
+                        // trim => remove white space at the start and end of the string
+                        title: $.trim($(this).text()) // use the element's text as the event title
+                    }
+
+                    // store the Event Object in the DOM element so we can get to it later
+                    $(this).data('eventObject', eventObject)
+
+                    // make the event draggable using jQuery UI
+                    $(this).draggable({
+                        zIndex        : 1070,
+                        revert        : true, // will cause the event to go back to its
+                        revertDuration: 0  //  original position after the drag
+                    })
+
+                })
+            }
+
+            ini_events($('#external-events div.external-event'))
+
+            /* initialize the calendar
+             -----------------------------------------------------------------*/
+//Date for the calendar events (dummy data)
+            var date = new Date()
+            var d    = date.getDate(),
+                m    = date.getMonth(),
+                y    = date.getFullYear()
+
+            var Calendar = FullCalendar.Calendar;
+
+
+            var containerEl = document.getElementById('external-events');
+            var checkbox = document.getElementById('drop-remove');
+            var calendarEl = document.getElementById('calendar');
+
+// initialize the external events
+// -----------------------------------------------------------------
+
+
+//Data of Patient
+
+            function addEvent1(rdvs){
+                for(let i=0; i<rdvs.length; i++){
+                    var eventObject = {
+                        title          : rdvs[i].nomPatient +' ( '+ rdvs[i].traitement+' )',
+                        start          : printdate(rdvs[i].dateRdv)+'T'+ print24(rdvs[i].heureRdv),
+                        end            : printdate(rdvs[i].dateRdv)+'T'+ print24(rdvs[i].heureFin),
+                        allDay         : false,
+                        backgroundColor: getRandomColor(),
+                        borderColor    : '#000000'
+                    };
+                    calendar.addEvent(eventObject)
+                }
+            }
+            function addEvent2(rdvs){
+                for(let i=0; i<rdvs.length; i++){
+                    var eventObject = {
+                        title          : rdvs[i].nomPatient +' ( '+ rdvs[i].traitement+' )',
+                        start          : printdate(rdvs[i].dateRdv)+'T'+ print24(rdvs[i].heureRdv),
+                        end            : printdate(rdvs[i].dateRdv)+'T'+ print24(rdvs[i].heureFin),
+                        allDay         : false,
+                        backgroundColor: '#000000',
+                        borderColor    : '#000000'
+                    };
+                    calendar.addEvent(eventObject)
+                }
+            }
+
+
+            var calendar = new Calendar(calendarEl, {
+                    headerToolbar: {
+                        left  : 'prev,next today',
+                        center: 'title',
+                        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    themeSystem: 'bootstrap',
+                    //Random default events
+                    events: []
+                }
+            );
+            var rdvsno=[[${rdvsno}]];
+            var rdvsoui=[[${rdvsoui}]]
+            addEvent1(rdvsno);
+            addEvent2(rdvsoui)
+            calendar.render();
+
+// $('#calendar').fullCalendar()
+
+
+            /* ADDING EVENTS */
+            var currColor = '#3c8dbc' //Red by default
+// Color chooser button
+            $('#color-chooser > li > a').click(function (e) {
+                e.preventDefault()
+                // Save color
+                currColor = $(this).css('color')
+                // Add color effect to button
+                $('#add-new-event').css({
+                    'background-color': currColor,
+                    'border-color'    : currColor
+                })
+            })
+            $('#add-new-event').click(function (e) {
+                e.preventDefault()
+                // Get value and make sure it is not null
+                var val = $('#new-event').val()
+                if (val.length == 0) {
+                    return
+                }
+
+                // Create events
+                var event = $('<div />')
+                event.css({
+                    'background-color': currColor,
+                    'border-color'    : currColor,
+                    'color'           : '#fff'
+                }).addClass('external-event')
+                event.text(val)
+                $('#external-events').prepend(event)
+
+                // Add draggable funtionality
+                ini_events(event)
+
+                // Remove event from text input
+                $('#new-event').val('')
+            })
+
+        })
+       // get time without AM or PM
+        function print24(str)
+        {
+            // Get hours
+            var time = "";
+            var str1=str.split(":");
+            if(str1[0].length==2) {
+                var h1 = Number(str[1] - '0');
+                var h2 = Number(str[0] - '0');
+                var hh = (h2 * 10 + h1 % 10);
+                // If time is in "AM"
+                if (str[6] == 'A') {
+                    if (hh == 12) {
+                        time = "00";
+                        for (var i = 2; i <= 3; i++)
+                            time = time + str[i];
+                    } else {
+                        for (var i = 0; i <= 4; i++)
+                            time = time + str[i];
+                    }
+                }
+
+                // If time is in "PM"
+                else {
+                    if (hh == 12) {
+                        time = "12";
+                        for (var i = 2; i <= 4; i++)
+                            time = time + str[i];
+                    } else {
+                        hh = hh + 12;
+                        time = hh;
+                        for (var i = 2; i <= 4; i++)
+                            time = time + str[i];
+                    }
+                }
+            }
+            else {
+                var h1 = Number(str[0] - '0');
+                var h2 = 0;
+                var hh = (h2 * 10 + h1 % 10);
+                // If time is in "AM"
+                if (str[6] == 'A') {
+                    if (hh == 12) {
+                        time = "00";
+                        for (var i = 1; i <= 3; i++)
+                            time = time + str[i];
+                    } else {
+                        time = "0";
+                        for (var i = 0; i <= 3; i++)
+                            time = time + str[i];
+                    }
+                }
+
+                // If time is in "PM"
+                else {
+                    if (hh == 12) {
+                        time = "12";
+                        for (var i = 1; i <= 3; i++)
+                            time = time + str[i];
+                    } else {
+                        hh = hh + 12;
+                        time = hh;
+                        for (var i = 1; i <= 3; i++)
+                            time = time + str[i];
+                    }
+
+                }
+            }
+            return time;
+        }
+        //convert date / to date -
+        function printdate(str){
+
+            const [month,day,year] = str.split('/');
+
+            const result = [year, month, day].join('-');
+            return result;
+        }
+
+        //get color aleatoire
+        function getRandomColor() {
+            var letters = '123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+    </script>
+
+</div>

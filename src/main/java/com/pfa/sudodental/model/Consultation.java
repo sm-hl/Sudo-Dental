@@ -24,7 +24,7 @@ public class Consultation extends AbstractModel<Long> {
         fetch = FetchType.LAZY
 )
 @JoinColumn(name = "consultation_id")
-    private Set<Seance> seanceList=new HashSet<>();
+    private List<Seance> seanceList=new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -32,14 +32,14 @@ public class Consultation extends AbstractModel<Long> {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "certificat_id")
-    private Set<Certificat> certificatSet=new HashSet<>();
+    private List<Certificat> certificatSet=new ArrayList<>();
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "consultation_id")
-    private Set<Ordonance> ordonanceList=new HashSet<>();
+    private List<Ordonance> ordonanceList=new ArrayList<>();
     @OneToOne(
             fetch = FetchType.EAGER
     )

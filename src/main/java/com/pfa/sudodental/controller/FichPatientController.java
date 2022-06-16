@@ -6,6 +6,7 @@ import com.pfa.sudodental.service.ConsultationService;
 import com.pfa.sudodental.service.PatientService;
 import com.pfa.sudodental.service.RdvService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -68,8 +69,11 @@ public class FichPatientController {
         rdvService.delete(idRdv);
         return "redirect:/Patient/"+id;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @PostMapping("/Patient/{id}/addConsultation")
     public String AddConsultation(@ModelAttribute Consultation consultation,@PathVariable Long id,Model model){
+        //avoid problem
+        consultation.setId(null);
         Patient patient=patientService.get(id);
         Acte acte=acteService.getActeByNom(consultation.getActe().getNomA());
         consultation.setActe(acte);
@@ -79,6 +83,7 @@ public class FichPatientController {
         model.addAttribute("modal",true);
         return "redirect:/Patient/"+id;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("/Patient/{id}/deleteConsultation/{idC}")
     public String DeleteConsultation(@PathVariable(name = "idC") Long idC,@PathVariable(name = "id") Long id,Model model){
         Patient patient=patientService.get(id);
@@ -87,7 +92,7 @@ public class FichPatientController {
         patientService.save(patient);
         return "redirect:/Patient/"+id;
     }
-
+    @PreAuthorize("hasAuthority('MED')")
     @PostMapping("/Patient/{id}/validerSD")
     public String validerSD(@ModelAttribute Dent dent,@PathVariable Long id, Model model){
          //avoid problem

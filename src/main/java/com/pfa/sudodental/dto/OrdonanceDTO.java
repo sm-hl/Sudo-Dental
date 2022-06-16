@@ -1,4 +1,4 @@
-package com.pfa.sudodental.DTO;
+package com.pfa.sudodental.dto;
 
 import com.pfa.sudodental.model.Ordonance;
 import lombok.Data;

@@ -95,7 +95,8 @@
         // The "add files" button doesn't need to be setup because the config
         // `clickable` has already been specified.
         document.querySelector("#actions .start").onclick = function() {
-            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+            parseImages();
         }
         document.querySelector("#actions .cancel").onclick = function() {
             myDropzone.removeAllFiles(true)

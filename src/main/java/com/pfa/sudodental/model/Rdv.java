@@ -18,6 +18,7 @@ public class Rdv extends AbstractModel<Long> {
     private String HeureFin;
     private String Traitement;
     private Boolean Etat;
+
     @ManyToOne
     @JoinColumn(name ="patient_id")
     Patient patient;

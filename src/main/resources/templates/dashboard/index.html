@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org " xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
+</head>
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse text-sm" th:with="active=${'Dashboard'}">
+<div class="wrapper">
+
+  <th:block th:replace="~{fragments/fragment-app :: header}"></th:block>
+  <th:block th:replace="~{fragments/fragment-app :: menu}"></th:block>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row d-flex justify-content-center">
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-primary elevation-1">
+                <i class="fas fa-calendar-day"></i></span>
+              <div class="info-box-content" >
+                <span class="info-box-text">date aujourd'huit</span>
+
+                <span class="info-box-text" th:text="${dateNow}"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1">
+                <i class="fas fa-calendar-check"></i></span>
+              <div class="info-box-content" >
+                <span class="info-box-text">Rendez-vous restés</span>
+
+                <span class="info-box-number" th:text="${rdvreste}"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1">
+                <i class="fas fa-clock"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Salle d'attente</span>
+                <span class="info-box-number" th:text="${rdvpasse}"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1">
+                <i class="fas fa-file-invoice-dollar"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">trésorier</span>
+                <div class="d-flex">
+                <span class="info-box-number" th:text="${VA}"></span>
+                  <span class="info-box-number" >DH</span>
+                </div>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <!-- /.row -->
+          <div class="col-12">
+            <div class="card card-primary">
+              <div class="card-body">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.row -->
+
+          <div class="col-12">
+            <!-- AREA CHART -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Situation financier</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <p class="text-center">
+                  <strong>Etat financier de l'année:</strong>
+                  <strong th:text="${thisYear}"></strong>
+                </p>
+                <div class="chart">
+                  <canvas id="areaChart" style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
+                  <!--  style="min-height: 250px; height: 100%; max-height: 250px; max-width: 100%;" -->
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+
+          <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="card card-danger ">
+              <div class="card-header">
+                <h3 class="card-title">Statistiques par le genre des patients</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <canvas id="donutChart2" style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col (RIGHT) -->
+
+          <!-- /.col (LEFT) -->
+          <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="card card-danger ">
+              <div class="card-header">
+                <h3 class="card-title">Statistiques par tranches d’âge</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <canvas id="donutChart" style="min-height: 370px; height: 370px; max-height: 370px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col (RIGHT) -->
+        </div>
+        <!-- /.row -->
+
+
+      </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <th:block th:replace="~{fragments/fragment-app :: footer}"></th:block>
+</div>
+<th:block th:replace="~{fragments/fragment-app :: script}"></th:block>
+<th:block th:replace="~{scripts/dashboard :: dashcomp}"></th:block>
+</body>
+</html>

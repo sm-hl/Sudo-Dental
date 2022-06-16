@@ -8,6 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,6 @@ import java.util.List;
 public class  UploadController {
     @Autowired
     ImageService imageService;
-
         @PostMapping("/uploadimage")
         public void uploadFile(@RequestParam("file")MultipartFile file,@RequestParam("consultation") String consultation) throws Exception {
             imageService.saveFile(file,consultation);

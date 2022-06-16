@@ -1,12 +1,13 @@
 package com.pfa.sudodental.controller;
 
 import com.lowagie.text.DocumentException;
-import com.pfa.sudodental.DTO.OrdonanceDTO;
+import com.pfa.sudodental.dto.OrdonanceDTO;
 import com.pfa.sudodental.export.CertificatExport;
 import com.pfa.sudodental.export.OrdonanceExport;
 import com.pfa.sudodental.model.*;
 import com.pfa.sudodental.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,7 @@ public class ConsultationController {
         model.addAttribute("medicaments",medicamentList);
         return "Gestion/Consultation";
     }
+    @PreAuthorize("hasAuthority('MED')")
     @PostMapping("/Patient/{id}/consultation/{id2}/addseance")
     public String ajouterSeance(@ModelAttribute Seance seance, @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2, Model model){
        //avoid problem
@@ -59,6 +61,7 @@ public class ConsultationController {
          consultationService.save(consultation);
         return "redirect:/Patient/"+id+"/consultation/"+id2;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("/Patient/{id}/consultation/{id2}/deleteseance/{ids}")
     public String deleteSeance(@PathVariable(name = "ids") Long ids, @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2, Model model) {
         Seance seance = seanceService.get(ids);
@@ -67,6 +70,7 @@ public class ConsultationController {
         consultationService.save(consultation);
         return "redirect:/Patient/" + id + "/consultation/" + id2;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @PostMapping("/Patient/{id}/consultation/{id2}/addordonance")
     public String ajouterOrdonance(@ModelAttribute OrdonanceDTO ordonanceDTO, @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2){
         Ordonance ordonance=ordonanceService.dtoToModel(ordonanceDTO);
@@ -75,14 +79,17 @@ public class ConsultationController {
         consultationService.save(consultation);
         return "redirect:/Patient/"+id+"/consultation/"+id2;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @PostMapping("/Patient/{id}/consultation/{id2}/addcertificat")
     public String ajouterCertificat(@ModelAttribute Certificat certificat, @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2){
+        //avoid problem
         certificat.setId(null);
         Consultation consultation=consultationService.get(id2);
         consultation.getCertificatSet().add(certificat);
         consultationService.save(consultation);
         return "redirect:/Patient/"+id+"/consultation/"+id2;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("/Patient/{id}/consultation/{id2}/deletecertificat/{idc}")
     public String deleteCertificat(@PathVariable(name = "idc") Long idc, @PathVariable(name = "id")Long id, @PathVariable("id2") Long id2, Model model) {
         Certificat certificat = certificatService.get(idc);
@@ -91,6 +98,7 @@ public class ConsultationController {
         consultationService.save(consultation);
         return "redirect:/Patient/" + id + "/consultation/" + id2;
     }
+    @PreAuthorize("hasAuthority('MED')")
     @GetMapping("/Patient/{id}/consultation/{id2}/validerReglement/{ids}")
     public String validerReglement(@PathVariable(name = "id")Long id, @PathVariable("id2") Long id2,@PathVariable(name = "ids") Long ids){
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");

@@ -28,6 +28,9 @@
     <link rel="stylesheet" th:href="@{plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css}">
     <!-- BS Stepper -->
     <link rel="stylesheet" th:href="@{plugins/bs-stepper/css/bs-stepper.min.css}">
+    <!-- fullCalendar -->
+    <link rel="stylesheet" href="plugins/fullcalendar/main.css">
+    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
 </div>
 
@@ -95,6 +98,14 @@
         <!--data-widget="treeview" permet de ramasser la liste de gestion  -->
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" >
          <!-- GO TO PAGE EXAMPLES -->
+            <li class="nav-item">
+                <a href="/Dashboard" th:class="${active eq 'Dashboard'? 'nav-link active' : 'nav-link'}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                        dashboard
+                    </p>
+                </a>
+            </li>
          <!-- GESTION -->
           <li class="nav-header">GESTION</li>
           <li class="nav-item">
@@ -202,8 +213,6 @@
     <script th:src="@{plugins/datatables-responsive/js/dataTables.responsive.min.js}"></script>
     <script th:src="@{plugins/datatables-responsive/js/responsive.bootstrap4.min.js}"></script>
     <script th:src="@{plugins/jszip/jszip.min.js}"></script>
-    <script th:src="@{plugins/pdfmake/pdfmake.min.js}"></script>
-    <script th:src="@{plugins/pdfmake/vfs_fonts.js}"></script>
     <script th:src="@{plugins/datatables-buttons/js/buttons.html5.min.js}"></script>
     <script th:src="@{plugins/datatables-buttons/js/buttons.print.min.js}"></script>
     <script th:src="@{plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>

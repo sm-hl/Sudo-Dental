@@ -9,9 +9,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("redirect:/Dashboard");
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/eror404").setViewName("error/404");
-        registry.addViewController("/eror500").setViewName("error/500");
+        registry.addViewController("/error404").setViewName("error/404");
+        registry.addViewController("/error500").setViewName("error/500");
     }
 
 }

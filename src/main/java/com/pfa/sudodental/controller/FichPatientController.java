@@ -1,5 +1,8 @@
 package com.pfa.sudodental.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.pfa.sudodental.model.*;
 import com.pfa.sudodental.service.ActeService;
 import com.pfa.sudodental.service.ConsultationService;
@@ -26,7 +29,7 @@ public class FichPatientController {
      ActeService acteService;
 
      @GetMapping("/Patient/{id}")
-    public String fichPatient(@PathVariable Long id,Model model){
+    public String fichPatient(@PathVariable Long id,Model model) throws JsonProcessingException {
         Patient patient =patientService.get(id);
         patientService.calculAllMontant(patient);
          model.addAttribute("patient",patient);
@@ -39,6 +42,8 @@ public class FichPatientController {
         model.addAttribute("rdvObject",new Rdv());
         model.addAttribute("dentobject",new Dent());
         model.addAttribute("actes",acteList);
+        //to avoid problem (seralisation javascript)
+         model.addAttribute("consultationList",patientService.convertMap(patient.getConsultationSet()));
          return "Gestion/fichePatient";
      }
     @PostMapping("/Patient/{id}/EditDM")
@@ -80,7 +85,15 @@ public class FichPatientController {
         consultation.setEtatReglement(false);
         patient.getConsultationSet().add(consultation);
         patientService.save(patient);
-        model.addAttribute("modal",true);
+        return "redirect:/Patient/"+id;
+    }
+    @PreAuthorize("hasAuthority('MED')")
+    @PostMapping("/Patient/{id}/updateConsultation")
+    public String updateConsultation(@ModelAttribute Consultation consultation,@PathVariable Long id,Model model){
+        Acte acte=acteService.getActeByNom(consultation.getActe().getNomA());
+        consultation.setActe(acte);
+        Consultation consultation1=consultationService.upConsultation(consultation);
+        consultationService.update(consultation1);
         return "redirect:/Patient/"+id;
     }
     @PreAuthorize("hasAuthority('MED')")

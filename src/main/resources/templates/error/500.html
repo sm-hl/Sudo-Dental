@@ -1,8 +1,11 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org "  xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
 <head>
   <title>500 Error Page</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
 </head>
 <body>
 <section layout:fragment="header">
@@ -21,7 +24,7 @@
 
       <p>
         We will work on fixing that right away.
-        Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the
+        Meanwhile, you may <a href="/Dashboard">return to dashboard</a> or try using the
         search form.
       </p>
 

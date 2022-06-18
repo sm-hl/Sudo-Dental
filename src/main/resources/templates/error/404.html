@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org "  xmlns:layout="http://www.utraq.net.nz/thymeleaf/layout">
 <head>
   <title>404 Page not found</title>
+  <base href="/">
+  <th:block th:replace="~{fragments/fragment-app :: link}"></th:block>
+  </base>
 </head>
 <body>
 <section th:fragment="header">

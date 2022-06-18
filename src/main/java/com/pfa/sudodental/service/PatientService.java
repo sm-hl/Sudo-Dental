@@ -1,6 +1,9 @@
 package com.pfa.sudodental.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.pfa.sudodental.model.Consultation;
 import com.pfa.sudodental.model.Patient;
 import com.pfa.sudodental.model.Seance;
@@ -66,6 +69,12 @@ public class PatientService extends AbstractService<Patient,Long>{
             }
         }
         return data;
+    }
+    public String convertMap(List<Consultation> consultationList) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        String consultationStr = mapper.writeValueAsString(consultationList);
+        return consultationStr;
     }
 
 }

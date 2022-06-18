@@ -17,4 +17,14 @@ protected JpaRepository<Consultation, Long> getRepository(){
         return consultationRepository;
 
 }
+
+public Consultation upConsultation(Consultation consultation){
+        Consultation consultation1=this.get(consultation.getId());
+        consultation.setEtatReglement(consultation1.getEtatReglement());
+        consultation.setSeanceList(consultation1.getSeanceList());
+        consultation.setCertificatSet(consultation1.getCertificatSet());
+        consultation.setOrdonanceList(consultation1.getOrdonanceList());
+        consultation.setMontantPaye(consultation1.getMontantPaye());
+        return consultation;
+};
 }

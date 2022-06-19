@@ -71,6 +71,7 @@ public class PatientService extends AbstractService<Patient,Long>{
         return data;
     }
     public String convertMap(List<Consultation> consultationList) throws JsonProcessingException {
+       //mapper
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         String consultationStr = mapper.writeValueAsString(consultationList);

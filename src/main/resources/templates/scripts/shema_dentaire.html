@@ -1,4 +1,4 @@
-<div th:fragment="SD" th:remove="tag">
+<div th:fragment="SD" th:remove="tag" xmlns:sec="http://www.w3.org/1999/xhtml">
     <script th:inline="javascript">
         var dents=[[${patient.dentList}]];
         function show_id(clicked_id,clicked_shema) {
@@ -32,5 +32,11 @@
                $('.select2').select2();
             }
         }
+    </script>
+    <script sec:authorize="hasAuthority('SEC')">
+        $("#etatD").attr("readonly","true");
+        $("#descD").attr("readonly","true");
+        $("#ActeD").attr("disabled","true");
+        $('.select2').select2();
     </script>
 </div>

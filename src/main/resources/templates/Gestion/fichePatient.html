@@ -719,20 +719,18 @@
     function modal_lcm(id){
         var jsonString=[[${consultationList}]];
         const consultationList =JSON.parse(jsonString);
-        console.log(consultationList);
         var input =document.getElementById("Idcu");
         input.setAttribute("value",id);
         var hiden =document.getElementById("hiden2");
         hiden.setAttribute("style","display:none");
         for(const consultation of consultationList){
             if(consultation.id==id){
-                console.log($("#NbrSeance"));
                 $("#Datecu").val(consultation.dateC);
                 $("#NbrSeancecu").val(consultation.nbrSeance);
                 $("#Montantcu").val(consultation.montant);
                 $("#selectActe option").each(function() {
                     if(this.value==consultation.acte.nomA){
-                        $("#selectActe option[value="+this.value+"]").prop('selected', true);
+                        $("#selectActe option[value='"+this.value+"']").prop('selected', true);
                         $('.select2').select2();
                     }
                 });

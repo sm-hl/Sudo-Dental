@@ -250,9 +250,7 @@
 
 
     <script th:inline="javascript">
-        console.log("ok");
         $("#selectActe2").change(function() {
-            console.log("ok");
             var actes = [[${actes}]];
             var getMontant = function (actes, acte) {
                 var returnMontant = 0;
@@ -293,7 +291,6 @@
             select.classList="form-control";
             select.classList+=" select2";
             select.setAttribute("name","medicamentDTOList["+i+"].medicamentId")
-            console.log(medicaments);
             for(const medicament of medicaments){
                 var opt=document.createElement("option");
                 opt.innerHTML=medicament['type']+"  "+medicament['nomM'];

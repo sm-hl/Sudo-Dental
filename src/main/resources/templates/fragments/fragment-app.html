@@ -250,7 +250,9 @@
 
 
     <script th:inline="javascript">
-        $("#selectActe").change(function() {
+        console.log("ok");
+        $("#selectActe2").change(function() {
+            console.log("ok");
             var actes = [[${actes}]];
             var getMontant = function (actes, acte) {
                 var returnMontant = 0;

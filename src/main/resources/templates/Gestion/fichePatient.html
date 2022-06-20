@@ -594,7 +594,7 @@
 
                <div class="form-group">
                         <label>Acte</label>
-                        <select class="form-control select2"  th:field="*{acte.NomA}">
+                        <select class="form-control select2" id="selectActe2"  th:field="*{acte.NomA}">
                             <option  th:disabled th:selected th:value > -- select an acte -- </option>
                           <option th:each="acte : ${actes}" th:text="${acte.NomA}" th:value="${acte.NomA}"></option>
                         </select>
